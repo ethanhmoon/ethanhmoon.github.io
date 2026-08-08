@@ -1,7 +1,7 @@
 :root {
-  --color-work: #ff6b6b;
-  --color-about: #4dabf7;
-  --color-play: #f5a623;
+  --color-work: #c92a2a;
+  --color-about: #1864ab;
+  --color-play: #d9480f;
   --color-bg: #fdfdfd;
   --color-text: #22223b;
   --nav-height: 64px;
@@ -33,6 +33,7 @@ body {
   padding: 0 1.5rem;
   background: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  flex-wrap: wrap;
 }
 
 .site-nav__brand {
@@ -69,6 +70,7 @@ body {
   padding: 3rem 1.5rem;
   max-width: 720px;
   margin: 0 auto;
+  scroll-margin-top: var(--nav-height);
 }
 
 .section h1 {
