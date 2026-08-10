@@ -128,7 +128,7 @@ body {
 .notebook {
   container-type: inline-size;
   position: relative;
-  width: min(440px, 100%);
+  width: min(660px, 100%);
   aspect-ratio: 520 / 650;
 }
 
@@ -149,8 +149,8 @@ body {
 
 .notebook__line {
   font-family: 'Patrick Hand', cursive;
-  font-size: 4.8cqw;
-  line-height: 5.4cqw;
+  font-size: 21px;
+  line-height: 23.7px;
   margin: 0;
   color: #1a1a1a;
 }
