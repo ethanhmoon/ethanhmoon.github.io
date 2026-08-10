@@ -133,6 +133,66 @@
         <div class="stack" id="stack" tabindex="0" role="button"
              aria-label="photo stack, press left or right arrow to flip through"></div>
         <p class="photos-hint">click me!</p>
+
+        <svg class="sticky-note" viewBox="0 0 340 340" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <filter id="sticky-sketch" x="-15%" y="-15%" width="130%" height="130%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="11" result="noise"/>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+            </filter>
+          </defs>
+
+          <g transform="rotate(-2 170 170)">
+            <g filter="url(#sticky-sketch)" stroke="#1a1a1a" stroke-linejoin="round">
+              <path d="M30 30 H310 V262 L262 310 H30 Z" fill="#fff8b8" stroke-width="2.4"/>
+              <path d="M310 262 L262 310 C270 288 288 270 310 262 Z" fill="#f2e392" stroke-width="2"/>
+              <path d="M34 35 H306 V260 L259 306 H34 Z" fill="none" stroke-width="1.1"/>
+            </g>
+
+            <text x="170" y="92" text-anchor="middle" font-size="32" font-weight="700">find me here!</text>
+
+            <a href="https://www.linkedin.com/in/ethanmoon17/" target="_blank" rel="noopener">
+              <title>my linkedin</title>
+              <g class="sticky-note__link">
+                <rect x="54" y="138" width="72" height="88" fill="transparent" stroke="none"/>
+                <g filter="url(#sticky-sketch)">
+                  <rect x="68" y="146" width="44" height="44" rx="10" fill="none" stroke="#1a1a1a" stroke-width="2.4"/>
+                </g>
+                <text x="90" y="180" text-anchor="middle" font-size="30" font-weight="700">in</text>
+                <text x="90" y="214" text-anchor="middle" font-size="21">linkedin</text>
+              </g>
+            </a>
+
+            <a href="https://github.com/ethanhmoon" target="_blank" rel="noopener">
+              <title>my github</title>
+              <g class="sticky-note__link">
+                <rect x="134" y="138" width="72" height="88" fill="transparent" stroke="none"/>
+                <g filter="url(#sticky-sketch)" transform="translate(170 170)">
+                  <path d="M-21 2 C-21 -7 -19 -11 -15 -14 L-19 -22 L-9 -17 C-3 -20 3 -20 9 -17 L19 -22 L15 -14 C19 -11 21 -7 21 2 C21 12 12 19 0 19 C-12 19 -21 12 -21 2 Z"
+                        fill="none" stroke="#1a1a1a" stroke-width="2.4" stroke-linejoin="round"/>
+                  <circle cx="-8" cy="-1" r="2.3" fill="#1a1a1a"/>
+                  <circle cx="8" cy="-1" r="2.3" fill="#1a1a1a"/>
+                </g>
+                <text x="170" y="214" text-anchor="middle" font-size="21">github</text>
+              </g>
+            </a>
+
+            <a href="resume.pdf" download>
+              <title>download my resume</title>
+              <g class="sticky-note__link">
+                <rect x="214" y="138" width="72" height="88" fill="transparent" stroke="none"/>
+                <g filter="url(#sticky-sketch)" stroke="#1a1a1a" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M233 146 H257 L267 156 V190 H233 Z"/>
+                  <path d="M257 146 V156 H267"/>
+                  <line x1="240" y1="166" x2="260" y2="166"/>
+                  <line x1="240" y1="173" x2="260" y2="173"/>
+                  <line x1="240" y1="180" x2="253" y2="180"/>
+                </g>
+                <text x="250" y="214" text-anchor="middle" font-size="21">resume</text>
+              </g>
+            </a>
+          </g>
+        </svg>
       </section>
     </div>
   </main>

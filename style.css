@@ -227,6 +227,26 @@ body {
   margin: 1rem 0 0;
 }
 
+.sticky-note {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 1.5rem;
+}
+
+.sticky-note text {
+  font-family: 'Patrick Hand', cursive;
+  fill: var(--color-text);
+}
+
+.sticky-note__link {
+  transition: transform 0.15s ease;
+}
+
+.sticky-note a:hover .sticky-note__link {
+  transform: translateY(-3px);
+}
+
 .stack {
   position: relative;
   width: 100%;
@@ -302,6 +322,10 @@ body {
 
   .doodle--mug:hover .doodle--mug__steam {
     animation: none;
+  }
+
+  .sticky-note__link {
+    transition-duration: 0.01s;
   }
 }
 
