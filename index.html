@@ -44,14 +44,31 @@
       </svg>
     </div>
 
-    <div class="lines">
-      <p class="line">i'm ethan.</p>
-      <p class="line">i like building small things that end up useful.</p>
-      <p class="line">right now: dispatch, a way to make job hunting a little less miserable.</p>
-      <p class="line">before that: robots.</p>
-      <p class="line">i spend a lot of time in text editors and not enough time outside.</p>
-      <p class="line">this site is a work in progress, like most things.</p>
+    <div class="about-layout">
+      <div class="lines">
+        <p class="line">Hello! I'm Ethan Moon.</p>
+        <p class="line">I just graduated from University of Maryland majoring in Information Science</p>
+        <p class="line">I like building things that are useful whether big or small.</p>
+        <p class="line">right now: robots and some personal projects</p>
+        <p class="line">before that: data and software stuff</p>
+        <p class="line"> </p>
+        <p class="line">I like to go to the gym, golf, run, and boulder in my me time</p>
+      </div>
+
+      <section class="photos-section">
+        <h2 class="photos-heading">
+          photos
+          <svg class="title-squiggle" viewBox="0 0 120 10" aria-hidden="true">
+            <path d="M3,6 Q13,1 23,6 T43,6 T63,6 T83,6 T103,6 T117,5"/>
+          </svg>
+        </h2>
+        <p class="photos-hint">drag or tap to flip through</p>
+        <div class="stack" id="stack" tabindex="0" role="button"
+             aria-label="photo stack, press left or right arrow to flip through"></div>
+      </section>
     </div>
   </main>
+
+  <script src="photos.js" defer></script>
 </body>
 </html>

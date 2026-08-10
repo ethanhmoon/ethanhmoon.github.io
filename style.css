@@ -65,7 +65,8 @@ body {
   margin-top: 2px;
 }
 
-.squiggle path {
+.squiggle path,
+.title-squiggle path {
   fill: none;
   stroke: var(--color-accent);
   stroke-width: 2;
@@ -103,6 +104,13 @@ body {
   margin-top: 1.5rem;
 }
 
+.about-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
 .lines {
   max-width: 480px;
 }
@@ -131,6 +139,115 @@ body {
   width: 100%;
   height: auto;
   margin-bottom: 1rem;
+}
+
+.photos-section {
+  flex-shrink: 0;
+  width: min(340px, 100%);
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.photos-heading {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 2rem;
+}
+
+.title-squiggle {
+  display: block;
+  width: 6.5em;
+  height: 0.5em;
+  margin-top: 4px;
+}
+
+.photos-hint {
+  color: #8a8a8a;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 2rem;
+}
+
+.stack {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 340 / 392;
+  margin: 0 auto;
+  outline: none;
+}
+
+.stack:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 16px;
+}
+
+/* Scoped exception to the sitewide no-border/no-shadow rule: the
+   polaroid card's border + shadow are what read as a physical photo. */
+.polaroid {
+  position: absolute;
+  inset: 0;
+  background: var(--color-bg);
+  padding: 14px 14px 0;
+  border: 1px solid #e6e6e6;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16), 0 1px 3px rgba(0, 0, 0, 0.10);
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.polaroid.dragging {
+  transition: none;
+  cursor: grabbing;
+}
+
+.polaroid img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  background: #f0f0f0;
+  pointer-events: none;
+}
+
+.polaroid .caption {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  height: 62px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.polaroid::before {
+  content: "";
+  position: absolute;
+  width: 95px;
+  height: 28px;
+  background: rgba(235, 235, 235, 0.55);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  display: none;
+}
+
+.polaroid.tape-tr::before { display: block; top: -10px;   right: -32px; transform: rotate(35deg); }
+.polaroid.tape-bl::before { display: block; bottom: 34px; left:  -36px; transform: rotate(15deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .polaroid {
+    transition-duration: 0.01s;
+  }
+}
+
+@media (min-width: 1200px) {
+  .photos-section {
+    margin-top: 6rem;
+  }
 }
 
 @media (max-width: 640px) {
