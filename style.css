@@ -180,9 +180,7 @@ body {
   right: -11cqw;
   width: 9cqw;
   height: auto;
-  color: var(--color-text);
-  stroke: var(--color-text);
-  fill: none;
+  display: block;
   transform: rotate(8deg);
   transform-origin: top center;
 }
