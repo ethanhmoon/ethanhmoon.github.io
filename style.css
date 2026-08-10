@@ -125,50 +125,38 @@ body {
   text-decoration: underline;
 }
 
-/* Same scoped exception as .polaroid: a notebook page needs a
-   visible edge to read as a page. */
 .notebook {
+  container-type: inline-size;
   position: relative;
-  display: flex;
-  max-width: 480px;
-  border: 2px solid var(--color-text);
-  border-radius: 10px;
-  background: var(--color-bg);
-  overflow: hidden;
+  width: min(440px, 100%);
+  aspect-ratio: 520 / 650;
 }
 
-.notebook__coil {
+.notebook-art {
   display: block;
-  flex-shrink: 0;
-  width: 26px;
+  width: 100%;
   height: 100%;
 }
 
-.notebook__coil-shape {
-  fill: none;
-  stroke: var(--color-text);
-  stroke-width: 2;
-}
-
 .notebook__page {
-  flex: 1;
-  min-width: 0;
-  padding: 1.6rem 1.75rem 1.6rem 0.75rem;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent,
-    transparent 29px,
-    #d9d9d9 29px,
-    #d9d9d9 30px
-  );
-  background-position: 0 26px;
+  position: absolute;
+  left: 23.5cqw;
+  right: 14.2cqw;
+  top: 14cqw;
+  bottom: 6cqw;
+  overflow: hidden;
 }
 
 .notebook__line {
   font-family: 'Patrick Hand', cursive;
-  font-size: 1.15rem;
-  line-height: 30px;
+  font-size: 4.8cqw;
+  line-height: 5.4cqw;
   margin: 0;
+  color: #1a1a1a;
+}
+
+.notebook__line--title {
+  font-weight: 700;
 }
 
 .work-section {

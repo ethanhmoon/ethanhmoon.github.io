@@ -27,13 +27,66 @@
   <main class="content">
     <h1 class="sr-only">contact — ethan moon.</h1>
     <div class="notebook">
-      <svg class="notebook__coil" aria-hidden="true">
+      <svg class="notebook-art" viewBox="0 0 520 650" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <defs>
-          <pattern id="notebook-coil" width="24" height="26" patternUnits="userSpaceOnUse">
-            <ellipse class="notebook__coil-shape" cx="12" cy="13" rx="9" ry="6" transform="rotate(-25 12 13)"/>
-          </pattern>
+          <filter id="sketch" x="-8%" y="-8%" width="116%" height="116%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="2" seed="7" result="noise"/>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3"/>
+          </filter>
+          <ellipse id="coil" rx="13" ry="8.5" transform="rotate(-28)" fill="none" stroke="#1a1a1a" stroke-width="2.6"/>
         </defs>
-        <rect width="100%" height="100%" fill="url(#notebook-coil)"/>
+
+        <g filter="url(#sketch)" stroke="#1a1a1a" stroke-linecap="round">
+          <path d="M96 594 Q270 601 458 593" fill="none" stroke-width="1.8"/>
+          <path d="M106 601 Q270 607 448 600" fill="none" stroke-width="1.8"/>
+
+          <rect x="80" y="42" width="388" height="546" rx="12" fill="#fff" stroke-width="2.4"/>
+          <rect x="84" y="47" width="381" height="538" rx="12" fill="none" stroke-width="1.2"/>
+
+          <g stroke-width="1.5">
+            <line x1="122" y1="100" x2="446" y2="100"/>
+            <line x1="122" y1="128" x2="446" y2="128"/>
+            <line x1="122" y1="156" x2="446" y2="156"/>
+            <line x1="122" y1="184" x2="446" y2="184"/>
+            <line x1="122" y1="212" x2="446" y2="212"/>
+            <line x1="122" y1="240" x2="446" y2="240"/>
+            <line x1="122" y1="268" x2="446" y2="268"/>
+            <line x1="122" y1="296" x2="446" y2="296"/>
+            <line x1="122" y1="324" x2="446" y2="324"/>
+            <line x1="122" y1="352" x2="446" y2="352"/>
+            <line x1="122" y1="380" x2="446" y2="380"/>
+            <line x1="122" y1="408" x2="446" y2="408"/>
+            <line x1="122" y1="436" x2="446" y2="436"/>
+            <line x1="122" y1="464" x2="446" y2="464"/>
+            <line x1="122" y1="492" x2="446" y2="492"/>
+            <line x1="122" y1="520" x2="446" y2="520"/>
+            <line x1="122" y1="548" x2="446" y2="548"/>
+            <line x1="122" y1="576" x2="446" y2="576"/>
+          </g>
+        </g>
+
+        <g filter="url(#sketch)">
+          <use href="#coil" x="79" y="60"/>
+          <use href="#coil" x="79" y="87"/>
+          <use href="#coil" x="79" y="115"/>
+          <use href="#coil" x="79" y="142"/>
+          <use href="#coil" x="79" y="170"/>
+          <use href="#coil" x="79" y="197"/>
+          <use href="#coil" x="79" y="225"/>
+          <use href="#coil" x="79" y="252"/>
+          <use href="#coil" x="79" y="280"/>
+          <use href="#coil" x="79" y="307"/>
+          <use href="#coil" x="79" y="335"/>
+          <use href="#coil" x="79" y="362"/>
+          <use href="#coil" x="79" y="390"/>
+          <use href="#coil" x="79" y="417"/>
+          <use href="#coil" x="79" y="445"/>
+          <use href="#coil" x="79" y="472"/>
+          <use href="#coil" x="79" y="500"/>
+          <use href="#coil" x="79" y="527"/>
+          <use href="#coil" x="79" y="555"/>
+          <use href="#coil" x="79" y="582"/>
+        </g>
       </svg>
       <div class="notebook__page">
         <p class="notebook__line">email: <a class="text-link" href="mailto:ethanmoon2000@yahoo.com">ethanmoon2000@yahoo.com</a></p>
