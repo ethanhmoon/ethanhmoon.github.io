@@ -253,6 +253,7 @@ body {
   aspect-ratio: 340 / 392;
   margin: 0 auto;
   outline: none;
+  transform: translate(-50px, -50px);
 }
 
 .stack:focus-visible {
