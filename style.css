@@ -1,110 +1,131 @@
 :root {
-  --color-work: #c92a2a;
-  --color-about: #1864ab;
-  --color-play: #d9480f;
-  --color-bg: #fdfdfd;
-  --color-text: #22223b;
-  --nav-height: 64px;
+  --color-text: #1a1a1a;
+  --color-bg: #ffffff;
+  --color-accent: #e8b923;
+  --sidebar-width: 200px;
 }
 
 * {
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  color: var(--color-text);
+  display: flex;
+  min-height: 100vh;
   background: var(--color-bg);
-}
-
-.site-nav {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: var(--nav-height);
-  padding: 0 1.5rem;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  flex-wrap: wrap;
-}
-
-.site-nav__brand {
-  font-weight: 700;
-  font-size: 1.1rem;
-}
-
-.site-nav__links {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.site-nav__links a {
-  text-decoration: none;
   color: var(--color-text);
-  font-weight: 600;
-  padding: 0.4rem 0.2rem;
-  border-bottom: 3px solid transparent;
-  transition: border-color 0.2s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
-.site-nav__links a:hover {
-  border-bottom-color: currentColor;
+.sidebar {
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+  padding: 4rem 2rem;
 }
 
-.section {
-  min-height: calc(100vh - var(--nav-height));
+.sidebar__brand {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.sidebar__nav {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 3rem 1.5rem;
-  max-width: 720px;
-  margin: 0 auto;
-  scroll-margin-top: var(--nav-height);
+  gap: 1.25rem;
 }
 
-.section h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.sidebar__nav-link {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: fit-content;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.2rem;
+  color: var(--color-text);
+  text-decoration: none;
 }
 
-.section p {
-  font-size: 1.15rem;
+.squiggle {
+  display: block;
+  width: 3em;
+  height: 0.6em;
+  margin-top: 2px;
+}
+
+.squiggle path {
+  fill: none;
+  stroke: var(--color-accent);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.content {
+  flex: 1;
+  position: relative;
+  padding: 4rem 3rem;
+}
+
+.doodles {
+  position: absolute;
+  top: 2rem;
+  right: 3rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  opacity: 0.9;
+}
+
+.doodle {
+  width: 70px;
+  height: auto;
+}
+
+.doodle--notebook {
+  transform: rotate(-4deg);
+}
+
+.doodle--mug {
+  transform: rotate(6deg);
+  margin-top: 1.5rem;
+}
+
+.lines {
+  max-width: 480px;
+}
+
+.line {
+  font-size: 1.05rem;
   line-height: 1.6;
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 1.5rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  margin: 1.5rem 0;
 }
 
-.section--work h1 {
-  color: var(--color-work);
+.text-link {
+  color: var(--color-text);
+  text-decoration: underline;
 }
 
-.section--about h1 {
-  color: var(--color-about);
-}
-
-.section--play h1 {
-  color: var(--color-play);
-}
-
-@media (max-width: 480px) {
-  .site-nav__links {
-    gap: 0.75rem;
+@media (max-width: 640px) {
+  body {
+    flex-direction: column;
   }
 
-  .section h1 {
-    font-size: 2rem;
+  .sidebar {
+    width: auto;
+    padding: 2rem 2rem 0.5rem;
+  }
+
+  .content {
+    padding: 1rem 2rem 4rem;
+  }
+
+  .doodles {
+    position: static;
+    margin-bottom: 2rem;
+  }
+
+  .doodle--mug {
+    margin-top: 0;
   }
 }
