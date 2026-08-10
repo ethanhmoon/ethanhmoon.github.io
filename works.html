@@ -6,7 +6,7 @@
   <title>works — ethan moon.</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400&family=Patrick+Hand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,7 +14,7 @@
     <div class="sidebar__brand">ethan moon.</div>
     <nav class="sidebar__nav">
       <a href="index.html" class="sidebar__nav-link">about</a>
-      <a href="works.html" class="sidebar__nav-link sidebar__nav-link--active">
+      <a href="works.html" class="sidebar__nav-link sidebar__nav-link--active" aria-current="page">
         works
         <svg class="squiggle" viewBox="0 0 60 10" aria-hidden="true">
           <path d="M1,6 Q7,1 13,6 T25,6 T37,6 T49,6 T60,5"/>
@@ -25,6 +25,7 @@
   </aside>
 
   <main class="content">
+    <h1 class="sr-only">works — ethan moon.</h1>
     <div class="lines">
       <p class="line">dispatch &mdash; a job aggregator i built to cut through the noise of job hunting. still shipping features.</p>
       <p class="line">robots &mdash; some robotics tinkering i've been doing on the side. more details coming soon.</p>

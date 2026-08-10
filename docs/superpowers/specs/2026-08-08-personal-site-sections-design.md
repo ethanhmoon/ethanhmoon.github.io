@@ -1,7 +1,7 @@
 # Personal Site: Work / About / Play Sections
 
 **Date:** 2026-08-08
-**Status:** Approved
+**Status:** Superseded 2026-08-10 by [2026-08-10-notebook-redesign-design.md](../specs/2026-08-10-notebook-redesign-design.md) — describes the earlier Work/About/Play design, since fully replaced.
 
 ## Purpose
 
