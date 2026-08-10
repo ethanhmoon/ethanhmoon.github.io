@@ -247,6 +247,129 @@ body {
   transform: translateY(-3px);
 }
 
+.contact-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.contact-sticky {
+  flex-shrink: 0;
+  width: min(272px, 100%);
+}
+
+/* Same scoped exception as .polaroid/.notebook: hand-drawn
+   stationery needs a visible (if wobbly) edge to read as a page. */
+.letter {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  padding: 26px 30px 30px;
+  background: var(--color-bg);
+  border: 2px solid var(--color-text);
+  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
+  font-family: 'Patrick Hand', cursive;
+  color: var(--color-text);
+}
+
+.letter::after {
+  content: "";
+  position: absolute;
+  inset: 5px;
+  border: 1px solid var(--color-text);
+  border-radius: 15px 250px 15px 220px / 250px 15px 220px 15px;
+  pointer-events: none;
+}
+
+.letter h2 {
+  margin: 0 0 18px;
+  font-size: 2.1rem;
+  font-weight: 700;
+}
+
+.letter .stamp {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 62px;
+  height: 74px;
+  border: 2px dashed var(--color-text);
+  transform: rotate(3deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.letter .row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 1.5rem;
+}
+
+.letter .row input {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid var(--color-text);
+  background: transparent;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.35rem;
+  color: var(--color-text);
+  outline: none;
+}
+
+.letter .message-label {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+}
+
+.letter textarea {
+  width: 100%;
+  height: 161px;
+  border: none;
+  resize: vertical;
+  padding: 0;
+  outline: none;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.35rem;
+  color: var(--color-text);
+  line-height: 30px;
+  background: repeating-linear-gradient(
+    transparent,
+    transparent 29px,
+    var(--color-text) 29px,
+    var(--color-text) 30px,
+    transparent 30px,
+    transparent 31px
+  );
+}
+
+.letter input:focus,
+.letter textarea:focus {
+  background-color: #fffdea;
+}
+
+.letter .send {
+  display: block;
+  margin: 20px 0 0 auto;
+  padding: 4px 24px;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.55rem;
+  font-weight: 700;
+  color: var(--color-text);
+  background: #fff8b8;
+  border: 2px solid var(--color-text);
+  border-radius: 225px 15px 255px 15px / 15px 255px 15px 225px;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.letter .send:hover {
+  transform: translateY(-2px) rotate(-1deg);
+}
+
 .stack-wrap {
   transform: translate(-120px, -50px);
 }
@@ -329,6 +452,10 @@ body {
   }
 
   .sticky-note__link {
+    transition-duration: 0.01s;
+  }
+
+  .letter .send {
     transition-duration: 0.01s;
   }
 }
