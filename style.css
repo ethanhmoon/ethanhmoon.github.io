@@ -150,8 +150,9 @@ body {
 
 .photos-hint {
   color: #8a8a8a;
-  font-size: 0.85rem;
-  margin: 0.5rem 0 2rem;
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+  margin: 1rem 0 0;
 }
 
 .stack {
