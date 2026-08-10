@@ -128,7 +128,7 @@ body {
 .notebook {
   container-type: inline-size;
   position: relative;
-  width: min(633.6px, 100%);
+  width: min(608.26px, 100%);
   aspect-ratio: 520 / 650;
 }
 
@@ -142,8 +142,8 @@ body {
   position: absolute;
   left: 23.46cqw;
   right: 14.23cqw;
-  top: 15.77cqw;
-  bottom: 9.71cqw;
+  top: 15.62cqw;
+  bottom: 9.61cqw;
   overflow: hidden;
 }
 
