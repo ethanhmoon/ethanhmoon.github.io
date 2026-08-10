@@ -143,9 +143,10 @@ body {
 
 .photos-section {
   flex-shrink: 0;
-  width: min(340px, 100%);
+  width: min(272px, 100%);
   text-align: center;
   margin-top: 3rem;
+  margin-left: auto;
 }
 
 .photos-heading {
