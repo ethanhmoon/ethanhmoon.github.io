@@ -3,34 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ethan Moon</title>
+  <title>ethan moon.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Patrick+Hand&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="site-nav">
-    <span class="site-nav__brand">Ethan Moon</span>
-    <ul class="site-nav__links" role="list">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#play">Play</a></li>
-    </ul>
-  </nav>
+  <aside class="sidebar">
+    <div class="sidebar__brand">ethan moon.</div>
+    <nav class="sidebar__nav">
+      <a href="index.html" class="sidebar__nav-link sidebar__nav-link--active">
+        about
+        <svg class="squiggle" viewBox="0 0 60 10" aria-hidden="true">
+          <path d="M1,6 Q7,1 13,6 T25,6 T37,6 T49,6 T60,5"/>
+        </svg>
+      </a>
+      <a href="works.html" class="sidebar__nav-link">works</a>
+      <a href="contact.html" class="sidebar__nav-link">contact</a>
+    </nav>
+  </aside>
 
-  <main>
-    <section id="work" class="section section--work">
-      <h1>Work</h1>
-      <p>Projects coming soon &mdash; this is where featured work will live.</p>
-    </section>
+  <main class="content">
+    <div class="doodles">
+      <svg class="doodle doodle--notebook" viewBox="0 0 120 90" aria-hidden="true">
+        <rect x="10" y="10" width="70" height="60" rx="2" transform="rotate(-6 45 40)" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <line x1="20" y1="30" x2="70" y2="26" stroke="#1a1a1a" stroke-width="1" transform="rotate(-6 45 40)"/>
+        <line x1="20" y1="42" x2="70" y2="38" stroke="#1a1a1a" stroke-width="1" transform="rotate(-6 45 40)"/>
+        <line x1="20" y1="54" x2="55" y2="51" stroke="#1a1a1a" stroke-width="1" transform="rotate(-6 45 40)"/>
+        <line x1="75" y1="15" x2="105" y2="75" stroke="#1a1a1a" stroke-width="1.5" stroke-linecap="round"/>
+        <line x1="100" y1="65" x2="108" y2="80" stroke="#1a1a1a" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <svg class="doodle doodle--mug" viewBox="0 0 90 100" aria-hidden="true">
+        <path d="M20 40 h40 v35 a20 20 0 0 1 -40 0 z" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <path d="M60 48 q15 0 15 15 t-15 15" fill="none" stroke="#1a1a1a" stroke-width="1.5"/>
+        <path d="M28 30 q-4 -8 2 -14" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-linecap="round"/>
+        <path d="M40 30 q-4 -10 2 -18" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-linecap="round"/>
+        <path d="M52 30 q-4 -8 2 -14" fill="none" stroke="#1a1a1a" stroke-width="1" stroke-linecap="round"/>
+      </svg>
+    </div>
 
-    <section id="about" class="section section--about">
-      <h1>About</h1>
-      <p>Hi, I'm Ethan. This is placeholder bio text &mdash; the real one is coming soon.</p>
-    </section>
-
-    <section id="play" class="section section--play">
-      <h1>Play</h1>
-      <p>Side projects, experiments, and hobbies will show up here.</p>
-    </section>
+    <div class="lines">
+      <p class="line">i'm ethan.</p>
+      <p class="line">i like building small things that end up useful.</p>
+      <p class="line">right now: dispatch, a way to make job hunting a little less miserable.</p>
+      <p class="line">before that: robots.</p>
+      <p class="line">i spend a lot of time in text editors and not enough time outside.</p>
+      <p class="line">this site is a work in progress, like most things.</p>
+    </div>
   </main>
 </body>
 </html>
