@@ -101,6 +101,33 @@ body {
 .doodle--mug {
   transform: rotate(6deg);
   margin-top: 1.5rem;
+  pointer-events: bounding-box;
+}
+
+.doodle--mug__steam {
+  transform-box: fill-box;
+  transform-origin: bottom center;
+}
+
+.doodle--mug:hover .doodle--mug__steam {
+  animation: steam-wiggle 0.7s ease-in-out infinite;
+}
+
+.doodle--mug:hover .doodle--mug__steam--2 {
+  animation-delay: 0.12s;
+}
+
+.doodle--mug:hover .doodle--mug__steam--3 {
+  animation-delay: 0.24s;
+}
+
+@keyframes steam-wiggle {
+  0%, 100% {
+    transform: translateX(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(1.5px) rotate(6deg);
+  }
 }
 
 .about-layout {
@@ -260,6 +287,10 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .polaroid {
     transition-duration: 0.01s;
+  }
+
+  .doodle--mug:hover .doodle--mug__steam {
+    animation: none;
   }
 }
 
