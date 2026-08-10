@@ -178,10 +178,10 @@ body {
   position: absolute;
   top: 8cqw;
   right: -11cqw;
-  width: 9cqw;
+  width: 27cqw;
   height: auto;
   display: block;
-  transform: rotate(8deg);
+  transform: rotate(15deg);
   transform-origin: top center;
 }
 
