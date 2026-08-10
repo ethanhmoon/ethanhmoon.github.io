@@ -257,6 +257,7 @@ body {
 .contact-sticky {
   flex-shrink: 0;
   width: min(272px, 100%);
+  margin-left: auto;
 }
 
 /* Same scoped exception as .polaroid/.notebook: hand-drawn
