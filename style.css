@@ -118,6 +118,21 @@ body {
   text-decoration: underline;
 }
 
+.work-section {
+  margin: 3rem 0;
+}
+
+.work-section:first-child {
+  margin-top: 0;
+}
+
+.work-title {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+}
+
 @media (max-width: 640px) {
   body {
     flex-direction: column;
