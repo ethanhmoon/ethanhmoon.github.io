@@ -125,6 +125,52 @@ body {
   text-decoration: underline;
 }
 
+/* Same scoped exception as .polaroid: a notebook page needs a
+   visible edge to read as a page. */
+.notebook {
+  position: relative;
+  display: flex;
+  max-width: 480px;
+  border: 2px solid var(--color-text);
+  border-radius: 10px;
+  background: var(--color-bg);
+  overflow: hidden;
+}
+
+.notebook__coil {
+  display: block;
+  flex-shrink: 0;
+  width: 26px;
+  height: 100%;
+}
+
+.notebook__coil-shape {
+  fill: none;
+  stroke: var(--color-text);
+  stroke-width: 2;
+}
+
+.notebook__page {
+  flex: 1;
+  min-width: 0;
+  padding: 1.6rem 1.75rem 1.6rem 0.75rem;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent,
+    transparent 29px,
+    #d9d9d9 29px,
+    #d9d9d9 30px
+  );
+  background-position: 0 26px;
+}
+
+.notebook__line {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.15rem;
+  line-height: 30px;
+  margin: 0;
+}
+
 .work-section {
   margin: 3rem 0;
 }
