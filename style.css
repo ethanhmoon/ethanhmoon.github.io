@@ -247,13 +247,16 @@ body {
   transform: translateY(-3px);
 }
 
+.stack-wrap {
+  transform: translate(-120px, -50px);
+}
+
 .stack {
   position: relative;
   width: 100%;
   aspect-ratio: 340 / 392;
   margin: 0 auto;
   outline: none;
-  transform: translate(-50px, -50px);
 }
 
 .stack:focus-visible {
