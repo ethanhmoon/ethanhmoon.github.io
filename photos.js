@@ -7,11 +7,12 @@
    Delete the demo() helper once you're using real photos.
    ============================================================ */
 const photos = [
-  { src: demo("#cfe3f5", "photo 1"), caption: "drag or tap me" },
-  { src: demo("#f5e2cf", "photo 2"), caption: "swap in your own pics" },
-  { src: demo("#d9f0d5", "photo 3"), caption: "edit the captions too" },
-  { src: demo("#f0d5e8", "photo 4"), caption: "college park" },
-  { src: demo("#f5f0cf", "photo 5"), caption: "summer 2026" },
+
+  { src: "Images/soccer.JPG", caption: "Soccer!" },
+  { src: "Images/golf.png", caption: "soo close... >:(" },
+  { src: "Images/strava.jpg", caption: "Running!!" },
+  { src: "Images/thailand.jpg", caption: "Traveling w/ some buds" },
+  { src: "Images/grad.jpg", caption: "Graduated 2026!" },
 ];
 
 // makes a colored placeholder image — delete once you use real photos

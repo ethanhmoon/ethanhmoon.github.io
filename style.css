@@ -65,8 +65,7 @@ body {
   margin-top: 2px;
 }
 
-.squiggle path,
-.title-squiggle path {
+.squiggle path {
   fill: none;
   stroke: var(--color-accent);
   stroke-width: 2;
@@ -147,22 +146,6 @@ body {
   text-align: center;
   margin-top: 3rem;
   margin-left: auto;
-}
-
-.photos-heading {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 0;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 2rem;
-}
-
-.title-squiggle {
-  display: block;
-  width: 6.5em;
-  height: 0.5em;
-  margin-top: 4px;
 }
 
 .photos-hint {
