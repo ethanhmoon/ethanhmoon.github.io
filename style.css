@@ -378,9 +378,9 @@ body {
     text-align: center; margin: 0 0 14px; opacity: .85; }
 
 /* ---------- projects as sticky notes ---------- */
-.projects { flex-shrink: 0; max-width: 322px; }
-.sticky-row { display: grid; grid-template-columns: repeat(2, 150px); gap: 22px; }
-.pnote { position: relative; width: 150px; height: 150px; cursor: pointer;
+.projects { flex-shrink: 0; max-width: 412px; }
+.sticky-row { display: grid; grid-template-columns: repeat(2, 195px); gap: 22px; }
+.pnote { position: relative; width: 195px; height: 195px; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; text-decoration: none; color: var(--ink);
     padding: 14px 12px; box-sizing: border-box;
