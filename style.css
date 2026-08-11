@@ -245,7 +245,7 @@ body {
 
 .career-book { --page-h: 460px; --ink: #1a1a1a;
   display: flex; align-items: flex-start;
-  width: 100%; max-width: 900px;
+  width: 100%; max-width: 900px; margin-top: 3rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); }
 
 /* 3D stage for the open/close flip */
@@ -378,8 +378,8 @@ body {
     text-align: center; margin: 0 0 14px; opacity: .85; }
 
 /* ---------- projects as sticky notes ---------- */
-.projects { width: 100%; max-width: 900px; margin: 0 auto 30px; }
-.sticky-row { display: flex; flex-wrap: wrap; gap: 22px; justify-content: center; }
+.projects { flex-shrink: 0; max-width: 322px; }
+.sticky-row { display: grid; grid-template-columns: repeat(2, 150px); gap: 22px; }
 .pnote { position: relative; width: 150px; height: 150px; cursor: pointer;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; text-decoration: none; color: var(--ink);
