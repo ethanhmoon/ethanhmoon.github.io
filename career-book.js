@@ -4,10 +4,15 @@
 
   function open()  { book.classList.add('open'); }
 
-  // 1) auto-open when the notebook scrolls into view
+  // 1) auto-open when the notebook scrolls into view, after a short pause
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) { if (e.isIntersecting) { open(); io.disconnect(); } });
+      entries.forEach(function (e) {
+        if (e.isIntersecting) {
+          io.disconnect();
+          setTimeout(open, 1000);
+        }
+      });
     }, { threshold: 0.45 });
     io.observe(book);
   } else {
