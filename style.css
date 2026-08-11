@@ -5,6 +5,10 @@
   --sidebar-width: 200px;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;
@@ -30,6 +34,9 @@ body {
 }
 
 .sidebar {
+  position: sticky;
+  top: 0;
+  align-self: flex-start;
   width: var(--sidebar-width);
   flex-shrink: 0;
   padding: 4rem 2rem;
@@ -63,6 +70,12 @@ body {
   width: 3em;
   height: 0.6em;
   margin-top: 2px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar__nav-link--active .squiggle {
+  opacity: 1;
 }
 
 .squiggle path {
@@ -75,7 +88,11 @@ body {
 .content {
   flex: 1;
   position: relative;
-  padding: 4rem 3rem;
+  padding: 0 3rem;
+}
+
+.page-section {
+  padding: 4rem 0;
 }
 
 .doodles {
@@ -210,6 +227,206 @@ body {
   width: 100%;
   height: auto;
   margin-bottom: 1rem;
+}
+
+/* ============================================================
+   CAREER BOOK — works section: header, project sticky notes,
+   flip-book, internship cards. Colors/shadows/animations kept as
+   provided (same scoped-exception reasoning as .polaroid/.letter:
+   this component's whole interaction model depends on them).
+   ============================================================ */
+
+.works-layout {
+  display: flex;
+  gap: 3rem;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.career-book { --page-h: 460px; --ink: #1a1a1a;
+  display: flex; align-items: flex-start;
+  width: 100%; max-width: 900px;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); }
+
+/* 3D stage for the open/close flip */
+.book-3d { position: relative; flex: 1; height: var(--page-h); perspective: 2200px; z-index: 2; }
+.spread  { position: absolute; inset: 0; transform-style: preserve-3d;
+           transform: translateX(-25%);           /* closed: cover centered */
+           transition: transform .95s cubic-bezier(.2,.72,.2,1); }
+.open .spread { transform: translateX(0); }        /* open: full two-page spread */
+
+/* a ruled page look, shared by both inside pages */
+.ruled { background:
+    repeating-linear-gradient(transparent, transparent 27px, #d7e4f4 27px, #d7e4f4 28px),
+    #fff; }
+
+/* RIGHT inside page (details) — sits under the cover until opened */
+.page-right { position: absolute; left: 50%; top: 0; width: 50%; height: 100%;
+    border-radius: 0 6px 6px 0; box-shadow: 0 10px 26px rgba(0,0,0,.14);
+    padding: 30px 34px 24px 26px; box-sizing: border-box; overflow: auto; }
+
+/* the cover leaf: front = book cover, back = LEFT inside page (overview) */
+.leaf { position: absolute; left: 50%; top: 0; width: 50%; height: 100%;
+    transform-origin: 0 50%; transform-style: preserve-3d;
+    transform: rotateY(0deg); z-index: 5;
+    transition: transform .95s cubic-bezier(.2,.72,.2,1); }
+.open .leaf { transform: rotateY(-180deg); }
+.face { position: absolute; inset: 0; backface-visibility: hidden;
+    -webkit-backface-visibility: hidden; box-sizing: border-box; }
+
+/* ---- the cover face ---- */
+.cover { border-radius: 6px 10px 10px 6px;
+    background:
+      radial-gradient(120% 90% at 30% 15%, #6f8f86 0%, #5c7a72 55%, #4e6a63 100%);
+    box-shadow: 0 14px 30px rgba(0,0,0,.22);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 30px; overflow: hidden; }
+/* spiral coil down the cover's spine (left edge) */
+.cover .coil { position: absolute; left: 10px; top: 0; height: 100%; }
+/* the taped-on label */
+.label { background: #fdfaf0; color: #1a1a1a; width: 78%;
+    padding: 22px 16px 26px; text-align: center; transform: rotate(-1.5deg);
+    box-shadow: 0 6px 16px rgba(0,0,0,.28);
+    border: 1px solid #e7e0cd; }
+.label .kicker { font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 11px; letter-spacing: 3px;
+    text-transform: uppercase; opacity: .55; }
+.label .title { font-family: 'Patrick Hand', cursive; font-weight: 700;
+    font-size: 40px; line-height: 1.02; margin: 8px 0 6px; }
+.label .rule { width: 60%; height: 2px; background: #1a1a1a; margin: 8px auto; opacity: .8; }
+.label .vol  { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 26px; }
+/* little corner star doodle */
+.cover .star { position: absolute; bottom: 20px; right: 22px; opacity: .8; }
+/* "scroll to open" hint, fades away on open */
+.hint { position: absolute; bottom: 16px; left: 0; right: 0; text-align: center;
+    font-family: 'Patrick Hand', cursive; font-size: 20px; color: #eef4f1;
+    opacity: .9; transition: opacity .4s; }
+.open .hint { opacity: 0; }
+
+/* ---- the back of the leaf = LEFT inside page (overview) ---- */
+.leaf-back { transform: rotateY(180deg); border-radius: 6px 0 0 6px;
+    box-shadow: 0 10px 26px rgba(0,0,0,.14);
+    padding: 30px 26px 24px 34px; overflow: auto; }
+
+/* spiral binding shown in the center gutter once open */
+.spiral { position: absolute; left: 50%; top: 10px; transform: translateX(-50%);
+    z-index: 6; opacity: 0; transition: opacity .5s .35s; pointer-events: none; }
+.open .spiral { opacity: 1; }
+/* soft gutter shadow */
+.gutter { position: absolute; top: 0; bottom: 0; left: 50%; width: 42px;
+    transform: translateX(-50%); z-index: 4; pointer-events: none; opacity: 0;
+    transition: opacity .5s .35s;
+    background: linear-gradient(90deg, transparent, rgba(0,0,0,.09) 45%, rgba(0,0,0,.09) 55%, transparent); }
+.open .gutter { opacity: 1; }
+
+/* page text */
+.page-right h3, .leaf-back h3 { margin: 0; font-size: 19px; line-height: 28px; }
+.sub  { margin: 0; font-size: 13px; line-height: 28px; opacity: .7; }
+.page-right p, .leaf-back p { margin: 0; font-size: 14.5px; line-height: 28px; }
+.page-right ul, .leaf-back ul { margin: 0 0 0 20px; padding: 0; font-size: 14.5px; line-height: 28px; }
+.cap { font-size: 12px; line-height: 28px; opacity: .5; text-transform: uppercase; letter-spacing: 1px; }
+.page-right a, .leaf-back a { color: var(--ink); }
+.career-book .hidden { display: none; }
+
+/* sticky tabs poking out the right edge — appear as it opens */
+.stickies { display: flex; flex-direction: column; gap: 12px; padding-top: 40px;
+    margin-left: -14px; opacity: 0; transform: translateX(10px);
+    transition: opacity .5s .3s, transform .5s .3s; }
+.open .stickies { opacity: 1; transform: translateX(0); }
+.sticky { font-family: 'Patrick Hand', cursive; font-size: 18px; font-weight: 700; color: var(--ink);
+    border: none; width: 104px; text-align: right; padding: 3px 10px 4px 22px;
+    border-radius: 0 6px 6px 0; box-shadow: 2px 2px 5px rgba(0,0,0,.15);
+    cursor: pointer; position: relative; z-index: 1;
+    transform: translateX(14px);                 /* others stick out on the sheet edge */
+    transition: transform .2s ease, box-shadow .2s ease; }
+.sticky:hover  { transform: translateX(18px); }  /* unselected slide further out on hover */
+.sticky.active,
+.sticky.active:hover {
+    transform: translateX(0);                    /* pulled in so it rests ON the page a little */
+    box-shadow: -3px 2px 6px rgba(0,0,0,.14);    /* soft shadow — sits on the sheet */
+    z-index: 3; }                                /* above the paper so the sliver shows */
+
+/* a page-turn sheet: sweeps over the right page when you switch tabs */
+.turn { position: absolute; left: 50%; top: 0; width: 50%; height: 100%;
+    transform-origin: 0 50%; transform: rotateY(0deg); z-index: 7;
+    border-radius: 0 6px 6px 0; box-shadow: -8px 10px 26px rgba(0,0,0,.16);
+    backface-visibility: hidden; -webkit-backface-visibility: hidden;
+    opacity: 0; pointer-events: none; }
+.turning .turn { animation: pageturn .5s ease-in forwards; }
+@keyframes pageturn {
+  0%   { opacity: 1; transform: rotateY(0deg); }
+  99%  { opacity: 1; }
+  100% { opacity: 0; transform: rotateY(-168deg); }
+}
+/* gentle settle for the freshly shown content */
+.career-book .enter { animation: settle .34s ease both; }
+@keyframes settle { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .spread, .leaf, .spiral, .gutter, .stickies { transition: none !important; }
+  .turning .turn, .career-book .enter { animation: none !important; }
+}
+
+/* ---------- sketched header ---------- */
+.career-header { width: 100%; max-width: 900px; margin: 0 auto 22px; text-align: center; }
+.sk-title { position: relative; display: inline-block; padding: 10px 52px 16px; }
+.sk-title .sk-border { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.sk-title span { position: relative; font-family: 'Patrick Hand', cursive; font-weight: 700;
+    font-size: 48px; line-height: 1; color: var(--ink); }
+
+/* section tag (small handwritten label above a group) */
+.section-tag { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 26px;
+    text-align: center; margin: 0 0 14px; opacity: .85; }
+
+/* ---------- projects as sticky notes ---------- */
+.projects { width: 100%; max-width: 900px; margin: 0 auto 30px; }
+.sticky-row { display: flex; flex-wrap: wrap; gap: 22px; justify-content: center; }
+.pnote { position: relative; width: 150px; height: 150px; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; text-decoration: none; color: var(--ink);
+    padding: 14px 12px; box-sizing: border-box;
+    box-shadow: 3px 5px 10px rgba(0,0,0,.16);
+    transition: transform .16s ease; }
+.pnote:nth-child(2n)   { transform: rotate(-2.5deg); }
+.pnote:nth-child(3n)   { transform: rotate(2deg); }
+.pnote:hover           { transform: translateY(-5px) rotate(0deg); }
+.pnote .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.pnote .pname { position: relative; z-index: 1; font-family: 'Patrick Hand', cursive;
+    font-weight: 700; font-size: 24px; line-height: 1.05; }
+.pnote .pblurb { position: relative; z-index: 1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    font-size: 11.5px; line-height: 1.25; margin-top: 6px; opacity: .8; }
+
+/* ---------- internship experience: side column next to the notebook ---------- */
+.internships { flex-shrink: 0; width: min(280px, 100%); }
+.intern-row { display: flex; flex-direction: column; gap: 18px; }
+.icard { position: relative; text-align: left;
+    background: transparent; border: none; cursor: pointer; color: var(--ink);
+    padding: 18px 20px; transition: transform .16s ease; }
+.icard:hover { transform: translateY(-4px); }
+.icard .sk-frame { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.icard > * { position: relative; z-index: 1; }
+.icard h4 { margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 24px; line-height: 1.05; }
+.icard .role { margin: 2px 0 6px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; opacity: .7; }
+.icard p { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; line-height: 1.4; }
+
+.m-title { display: none; }
+
+@media (max-width: 700px) {
+  .career-book { flex-direction: column; }
+  .book-3d { perspective: none; height: auto; }
+  .spread { position: static; transform: none !important; }
+  .leaf   { position: static; width: 100%; transform: none !important; }
+  .face   { position: static; backface-visibility: visible; }
+  .cover  { display: none; }
+  .leaf-back { transform: none; border-radius: 6px 6px 0 0; }
+  .page-right { position: static; width: 100%; border-radius: 0 0 6px 6px; }
+  .spiral, .gutter { display: none; }
+  .stickies { flex-direction: row; flex-wrap: wrap; gap: 8px; margin: 12px 0 0;
+      opacity: 1 !important; transform: none !important; padding-top: 0; }
+  .sticky { width: auto; text-align: center; border-radius: 6px;
+      transform: none !important; box-shadow: 2px 2px 5px rgba(0,0,0,.15); }
+  .sticky.active { box-shadow: none; outline: 2px solid rgba(0,0,0,.25); }
+  .m-title { display: block; font-family: 'Patrick Hand', cursive; font-weight: 700;
+      font-size: 30px; text-align: center; margin-bottom: 10px; }
 }
 
 .photos-section {
@@ -478,7 +695,11 @@ body {
   }
 
   .content {
-    padding: 1rem 2rem 4rem;
+    padding: 0 2rem;
+  }
+
+  .page-section {
+    padding: 1.5rem 0 2.5rem;
   }
 
   .doodles {
