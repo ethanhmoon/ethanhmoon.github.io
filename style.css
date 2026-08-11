@@ -329,7 +329,7 @@ body {
 
 /* sticky tabs poking out the right edge — appear as it opens */
 .stickies { display: flex; flex-direction: column; gap: 12px; padding-top: 40px;
-    margin-left: -14px; opacity: 0; transform: translateX(10px);
+    margin-left: 20px; opacity: 0; transform: translateX(10px);
     transition: opacity .5s .3s, transform .5s .3s; }
 .open .stickies { opacity: 1; transform: translateX(0); }
 .sticky { font-family: 'Patrick Hand', cursive; font-size: 18px; font-weight: 700; color: var(--ink);
@@ -367,7 +367,7 @@ body {
 }
 
 /* ---------- sketched header ---------- */
-.career-header { width: 100%; max-width: 900px; margin: 0 auto 22px; text-align: center; }
+.career-header { width: 100%; max-width: 900px; margin: 0 auto 56px; text-align: center; }
 .sk-title { position: relative; display: inline-block; padding: 10px 52px 16px; }
 .sk-title .sk-border { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 .sk-title span { position: relative; font-family: 'Patrick Hand', cursive; font-weight: 700;
