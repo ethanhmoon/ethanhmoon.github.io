@@ -247,7 +247,7 @@ body {
 
 .career-book { --page-h: 460px; --ink: #1a1a1a;
   display: flex; align-items: flex-start;
-  width: 100%; max-width: 900px; margin-top: 3rem;
+  width: 100%; max-width: 900px; margin: 3rem auto 0;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--ink); }
 
 /* 3D stage for the open/close flip */
@@ -490,6 +490,7 @@ body {
   --ink: #1a1a1a;
   width: 860px;
   max-width: 100%;
+  margin: 0 auto;
   display: flex;
   gap: 34px;
   align-items: stretch;
