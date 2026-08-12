@@ -324,35 +324,68 @@
             <div class="page-right ruled">
               <div class="dt" data-item="argonne">
                 <p class="cap">details</p>
-                <ul>
-                  <li>ros 2 (humble)</li>
-                  <li>add more details here</li>
-                  <li>and here</li>
+                <ul class="dt-list">
+                  <li><span class="dt-text">robotic arm sim + motion planning pipeline for a UR5 manipulator</span><span class="dt-metric">moveit2 &middot; gazebo</span></li>
+                  <li><span class="dt-text">tuned RRT* path planning for reliable end-to-end trajectory execution</span></li>
+                  <li><span class="dt-text">commands the arm to precise XYZ targets via pymoveit2</span></li>
+                  <li><span class="dt-text">ROS 2 Humble workspace, dockerized on Ubuntu 20.04</span><span class="dt-metric">9 commits</span></li>
+                  <li><span class="dt-text">also interned here in 2022 &mdash; sensor-driven control via inverse kinematics</span></li>
                 </ul>
               </div>
               <div class="dt hidden" data-item="fermilab">
                 <p class="cap">details</p>
-                <ul><li>detail one</li><li>detail two</li></ul>
+                <ul class="dt-list">
+                  <li><span class="dt-text">automated generation + filtering of simulation logs via python</span><span class="dt-metric">18,000+ logs</span></li>
+                  <li><span class="dt-text">profiled + optimized python backend across terabyte-scale ingestion</span><span class="dt-metric">TB-scale</span></li>
+                  <li><span class="dt-text">root-caused latency/throughput issues via logging, metrics, controlled experiments</span></li>
+                  <li><span class="dt-text">supported distributed job scheduling with platform engineers</span><span class="dt-metric">glideinwms</span></li>
+                </ul>
               </div>
               <div class="dt hidden" data-item="pnnl">
                 <p class="cap">details</p>
-                <ul><li>detail one</li><li>detail two</li></ul>
+                <ul class="dt-list">
+                  <li><span class="dt-text">eliminated redundant fields across ingestion pipelines</span><span class="dt-metric">&minus;45% volume</span></li>
+                  <li><span class="dt-text">streamlined log storage, cutting projected costs</span><span class="dt-metric">$500k+/yr</span></li>
+                  <li><span class="dt-text">designed scalable daily pipelines under retention constraints</span><span class="dt-metric">2 TB/day</span></li>
+                  <li><span class="dt-text">built a data-value scoring framework, surfaced via tableau dashboards</span></li>
+                  <li><span class="dt-text">analyzed ingestion patterns with splunk (SPL) + sql</span></li>
+                </ul>
               </div>
               <div class="dt hidden" data-item="dispatch">
                 <p class="cap">details</p>
-                <ul><li>node/express + supabase</li><li>repo: add a link here</li></ul>
+                <ul class="dt-list">
+                  <li><span class="dt-text">full-stack news aggregator with topic-filtered, digestible updates</span></li>
+                  <li><span class="dt-text">express + supabase backend</span></li>
+                  <li><span class="dt-text">deployed and live</span><span class="dt-metric">vercel</span></li>
+                </ul>
               </div>
               <div class="dt hidden" data-item="hunter">
                 <p class="cap">details</p>
-                <ul><li>fastapi + jinja2 + sqlite</li><li>repo: add a link here</li></ul>
+                <ul class="dt-list">
+                  <li><span class="dt-text">aggregates full-time new-grad roles across ATS boards + aggregators</span><span class="dt-metric">13 sources</span></li>
+                  <li><span class="dt-text">deduplicates by url, scores every listing deterministically</span></li>
+                  <li><span class="dt-text">auto-hides dead postings on every refresh</span><span class="dt-metric">404/410 check</span></li>
+                  <li><span class="dt-text">fastapi + sqlite, fully local, no signup</span><span class="dt-metric">344+ tests</span></li>
+                  <li><span class="dt-text">actively developed</span><span class="dt-metric">125+ commits</span></li>
+                </ul>
               </div>
               <div class="dt hidden" data-item="gemx">
                 <p class="cap">details</p>
-                <ul><li>adds rby1 (rainbow robotics) alongside unitree g1</li><li>repo: add a link here</li></ul>
+                <ul class="dt-list">
+                  <li><span class="dt-text">forked nvidia's GEM-X monocular 3d human pose model</span><span class="dt-metric">77-joint</span></li>
+                  <li><span class="dt-text">base pipeline retargets motion to a unitree g1 humanoid</span><span class="dt-metric">soma retargeter</span></li>
+                  <li><span class="dt-text">exploring retargeting to additional robot platforms</span></li>
+                </ul>
               </div>
               <div class="dt hidden" data-item="gym">
                 <p class="cap">details</p>
-                <ul><li>per-machine logging, grouped by muscle</li><li>repo: add a link here</li></ul>
+                <ul class="dt-list">
+                  <li><span class="dt-text">six fixed muscle-group categories</span></li>
+                  <li><span class="dt-text">append-only workout history &mdash; nothing overwrites a past PR</span></li>
+                  <li><span class="dt-text">estimated 1RM via the epley formula</span></li>
+                  <li><span class="dt-text">auto-tracks max weight, best volume, best set, longest streak</span><span class="dt-metric">4 PR types</span></li>
+                  <li><span class="dt-text">weight/volume charts update instantly, zero network dependency</span><span class="dt-metric">chart.js</span></li>
+                </ul>
               </div>
             </div>
 
@@ -395,38 +428,108 @@
               <div class="face leaf-back ruled">
                 <div class="ov" data-item="argonne">
                   <h3>argonne national laboratory</h3>
-                  <p class="sub">Research Aide &middot; Summer 2026 &ndash; now</p>
-                  <p>AI and Robotics</p>
+                  <p class="sub">AI &amp; Robotics Research Aide &middot; July 2026 &ndash; now</p>
+                  <div class="ov-sticker" style="background:#ffe083">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">UR5 + RRT*</span>
+                  </div>
+                  <p>simulating and planning motion for a UR5 arm.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">python</span>
+                    <span class="ov-skill">ros 2</span>
+                    <span class="ov-skill">moveit2</span>
+                    <span class="ov-skill">gazebo</span>
+                  </div>
                 </div>
                 <div class="ov hidden" data-item="fermilab">
                   <h3>fermi national accelerator laboratory</h3>
-                  <p class="sub">intern &middot; June 2023- May2024</p>
-                  <p>AI Directorate Software Engineer</p>
+                  <p class="sub">Computational Science &amp; AI Intern &middot; June 2023 &ndash; May 2024</p>
+                  <div class="ov-sticker" style="background:#ffb3c6">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">18,000+ logs</span>
+                  </div>
+                  <p>keeping terabyte-scale simulation pipelines fast and observable.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">python</span>
+                    <span class="ov-skill">glideinwms</span>
+                    <span class="ov-skill">profiling</span>
+                  </div>
                 </div>
                 <div class="ov hidden" data-item="pnnl">
                   <h3>pacific northwest national laboratory</h3>
-                  <p class="sub">intern &middot; Summer 2024</p>
-                  <p>Data Engineer</p>
+                  <p class="sub">Data Engineer Intern &middot; Jun 2024 &ndash; Aug 2024</p>
+                  <div class="ov-sticker" style="background:#a8d8ff">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">$500k+ saved</span>
+                  </div>
+                  <p>cut ingestion volume and cost across daily TB-scale pipelines.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">sql</span>
+                    <span class="ov-skill">splunk</span>
+                    <span class="ov-skill">tableau</span>
+                  </div>
                 </div>
                 <div class="ov hidden" data-item="dispatch">
                   <h3>dispatch</h3>
                   <p class="sub">project</p>
-                  <p>full-stack news app (node/express + supabase)</p>
+                  <div class="ov-sticker" style="background:#b6e6a8">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">shipped &check;</span>
+                  </div>
+                  <p>a news aggregator that filters down to what you actually care about.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">javascript</span>
+                    <span class="ov-skill">express</span>
+                    <span class="ov-skill">supabase</span>
+                  </div>
                 </div>
                 <div class="ov hidden" data-item="hunter">
                   <h3>hunter</h3>
                   <p class="sub">project</p>
-                  <p>job aggregator with a multi-source pipeline (fastapi + sqlite)</p>
+                  <div class="ov-sticker" style="background:#ffc79a">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">13 sources</span>
+                  </div>
+                  <p>aggregates, scores, and dedupes new-grad job postings &mdash; locally, no signup.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">python</span>
+                    <span class="ov-skill">fastapi</span>
+                    <span class="ov-skill">sqlite</span>
+                  </div>
                 </div>
                 <div class="ov hidden" data-item="gemx">
                   <h3>gem-x rby1</h3>
                   <p class="sub">project</p>
-                  <p>fork of nvidia gem-x adding rby1 humanoid motion retargeting</p>
+                  <div class="ov-sticker" style="background:#d5c1f2">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">77-joint model</span>
+                  </div>
+                  <p>extending nvidia's human motion model toward new robot platforms.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">pytorch</span>
+                    <span class="ov-skill">computer vision</span>
+                  </div>
                 </div>
                 <div class="ov hidden" data-item="gym">
                   <h3>gym tracker</h3>
-                  <p class="sub">project</p>
-                  <p>logs my lifts per machine + tracks estimated 1rm</p>
+                  <p class="sub">project &middot; part of hunter</p>
+                  <div class="ov-sticker" style="background:#a5e6d8">
+                    <span class="ov-sticker__tape ov-sticker__tape--l"></span>
+                    <span class="ov-sticker__tape ov-sticker__tape--r"></span>
+                    <span class="ov-sticker__text">6 categories</span>
+                  </div>
+                  <p>the lifting tracker built inside hunter.</p>
+                  <div class="ov-skills">
+                    <span class="ov-skill">javascript</span>
+                    <span class="ov-skill">chart.js</span>
+                    <span class="ov-skill">sqlite</span>
+                  </div>
                 </div>
               </div>
             </div>
