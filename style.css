@@ -372,16 +372,15 @@ body {
 }
 .ov-photo__tape {
   position: absolute;
-  top: -8px;
-  width: 26px;
-  height: 14px;
+  width: 39px;
+  height: 21px;
   background: rgba(235, 235, 235, .55);
   border: 1px solid rgba(0, 0, 0, .05);
   box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
   z-index: 2;
 }
-.ov-photo__tape--l { left: 4px; transform: rotate(-10deg); }
-.ov-photo__tape--r { right: 4px; transform: rotate(8deg); }
+.ov-photo__tape--l { top: -12px; left: 4px; transform: rotate(-10deg); }
+.ov-photo__tape--r { bottom: -12px; right: 4px; transform: rotate(8deg); }
 
 /* skills, bottom of the overview page */
 .ov-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
