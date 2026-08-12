@@ -480,128 +480,63 @@ body {
   transform: translateY(-3px);
 }
 
-.contact-layout {
+/* ============================================================
+   CONTACT — same sketch style (#sk filter) as the works page.
+   ============================================================ */
+
+.contact-wrap {
+  --ink: #1a1a1a;
+  width: 860px;
+  max-width: 100%;
   display: flex;
-  gap: 3rem;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  gap: 34px;
+  align-items: stretch;
 }
 
-.contact-sticky {
-  flex-shrink: 0;
-  width: min(272px, 100%);
-  margin-left: auto;
-}
+.contact-card { position: relative; flex: 1 1 auto; padding: 30px 34px 26px; }
+.contact-card .sk-frame { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.contact-card > * { position: relative; z-index: 1; }
+.ttl { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 40px; line-height: 1; margin: 0 0 6px; }
+.ttl + .lead { font-size: 14px; opacity: .7; margin: 0 0 18px; }
 
-/* Same scoped exception as .polaroid/.notebook: hand-drawn
-   stationery needs a visible (if wobbly) edge to read as a page. */
-.letter {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  padding: 26px 30px 30px;
-  background: var(--color-bg);
-  border: 2px solid var(--color-text);
-  border-radius: 255px 18px 225px 18px / 18px 225px 18px 255px;
-  font-family: 'Patrick Hand', cursive;
-  color: var(--color-text);
-}
+.contact-card .row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 16px; }
+.contact-card .row label { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 22px; width: 74px; flex: none; }
+.contact-card .row input { flex: 1; border: none; border-bottom: 2px solid var(--ink); background: transparent;
+    font-family: inherit; font-size: 15px; color: var(--ink); padding: 4px 2px; outline: none; }
+.msg-label { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 22px; margin: 4px 0 4px; }
+.contact-card textarea { width: 100%; height: 132px; border: none; resize: vertical; padding: 0 2px; outline: none;
+    font-family: inherit; font-size: 15px; color: var(--ink); line-height: 28px;
+    background: repeating-linear-gradient(transparent, transparent 27px, #d7e4f4 27px, #d7e4f4 28px); }
+.contact-card input:focus, .contact-card textarea:focus { background-color: #fffdea; }
 
-.letter::after {
-  content: "";
-  position: absolute;
-  inset: 5px;
-  border: 1px solid var(--color-text);
-  border-radius: 15px 250px 15px 220px / 250px 15px 220px 15px;
-  pointer-events: none;
-}
+.contact-card .send { position: relative; margin: 18px 0 0 auto; display: block; border: none; background: transparent;
+    cursor: pointer; padding: 6px 30px 10px; color: var(--ink);
+    font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 26px;
+    transition: transform .15s ease; }
+.contact-card .send:hover { transform: translateY(-2px) rotate(-1deg); }
+.contact-card .send .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.contact-card .send span { position: relative; z-index: 1; }
 
-.letter h2 {
-  margin: 0 0 18px;
-  font-size: 2.1rem;
-  font-weight: 700;
-}
+.ok { display: none; font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 22px;
+    color: #3a7d44; margin-top: 12px; }
 
-.letter .stamp {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 62px;
-  height: 74px;
-  border: 2px dashed var(--color-text);
-  transform: rotate(3deg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+.socials { flex: none; width: 210px; display: flex; flex-direction: column; }
+.snote-row { display: flex; flex-direction: column; gap: 18px; }
+.snote { position: relative; height: 78px; cursor: pointer; text-decoration: none; color: var(--ink);
+    display: flex; align-items: center; gap: 12px; padding: 0 18px;
+    box-shadow: 3px 4px 9px rgba(0,0,0,.15); transition: transform .16s ease; }
+.snote:nth-child(2) { transform: rotate(-1.5deg); }
+.snote:nth-child(3) { transform: rotate(1.5deg); }
+.snote:hover { transform: translateX(4px) rotate(0deg); }
+.snote .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.snote .ico, .snote .lbl { position: relative; z-index: 1; }
+.snote .lbl { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 22px; }
 
-.letter .row {
-  display: flex;
-  align-items: baseline;
-  gap: 10px;
-  margin-bottom: 16px;
-  font-size: 1.5rem;
-}
-
-.letter .row input {
-  flex: 1;
-  border: none;
-  border-bottom: 2px solid var(--color-text);
-  background: transparent;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1.35rem;
-  color: var(--color-text);
-  outline: none;
-}
-
-.letter .message-label {
-  font-size: 1.5rem;
-  margin-bottom: 4px;
-}
-
-.letter textarea {
-  width: 100%;
-  height: 161px;
-  border: none;
-  resize: vertical;
-  padding: 0;
-  outline: none;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1.35rem;
-  color: var(--color-text);
-  line-height: 30px;
-  background: repeating-linear-gradient(
-    transparent,
-    transparent 29px,
-    var(--color-text) 29px,
-    var(--color-text) 30px,
-    transparent 30px,
-    transparent 31px
-  );
-}
-
-.letter input:focus,
-.letter textarea:focus {
-  background-color: #fffdea;
-}
-
-.letter .send {
-  display: block;
-  margin: 20px 0 0 auto;
-  padding: 4px 24px;
-  font-family: 'Patrick Hand', cursive;
-  font-size: 1.55rem;
-  font-weight: 700;
-  color: var(--color-text);
-  background: #fff8b8;
-  border: 2px solid var(--color-text);
-  border-radius: 225px 15px 255px 15px / 15px 255px 15px 225px;
-  cursor: pointer;
-  transition: transform 0.15s ease;
-}
-
-.letter .send:hover {
-  transform: translateY(-2px) rotate(-1deg);
+@media (max-width: 720px) {
+  .contact-wrap { flex-direction: column; gap: 22px; }
+  .socials { width: 100%; }
+  .snote-row { flex-direction: row; flex-wrap: wrap; }
+  .snote { flex: 1 1 140px; }
 }
 
 .stack-wrap {
@@ -689,7 +624,8 @@ body {
     transition-duration: 0.01s;
   }
 
-  .letter .send {
+  .contact-card .send,
+  .snote {
     transition-duration: 0.01s;
   }
 }
