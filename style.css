@@ -330,14 +330,13 @@ body {
 .career-book .hidden { display: none; }
 
 /* details bullets: description on the left, highlighted metric on the right */
-.page-right .dt-list { list-style: none; margin: 4px 0 0; padding: 0; font-size: 14.5px; }
+.page-right .dt-list { list-style: none; margin: 0; padding: 0; font-size: 14.5px; }
 .dt-list li {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 10px;
-  line-height: 1.5;
-  padding: 5px 0;
+  line-height: 28px;
 }
 .dt-text { flex: 1; }
 .dt-metric {
@@ -345,6 +344,7 @@ body {
   font-family: 'Patrick Hand', cursive;
   font-weight: 700;
   font-size: 13px;
+  line-height: 1;
   color: var(--ink);
   background: #fff3c4;
   padding: 2px 10px;
@@ -352,21 +352,25 @@ body {
   white-space: nowrap;
 }
 
-/* taped-on sticker: a quick headline stat under the job title/date */
-.ov-sticker {
+/* taped-on photo under the job title/date */
+.ov-photo {
   position: relative;
   display: inline-block;
-  margin: 8px 0 10px;
-  padding: 6px 14px;
-  font-family: 'Patrick Hand', cursive;
-  font-weight: 700;
-  font-size: 15px;
-  color: var(--ink);
+  width: 64px;
+  height: 64px;
+  margin: 6px 0;
+  padding: 4px;
+  background: #fff;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, .15);
-  transform: rotate(-2deg);
+  transform: rotate(-3deg);
 }
-.ov-sticker__text { position: relative; z-index: 1; }
-.ov-sticker__tape {
+.ov-photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ov-photo__tape {
   position: absolute;
   top: -8px;
   width: 26px;
@@ -376,8 +380,8 @@ body {
   box-shadow: 0 1px 2px rgba(0, 0, 0, .06);
   z-index: 2;
 }
-.ov-sticker__tape--l { left: 10px; transform: rotate(-10deg); }
-.ov-sticker__tape--r { right: 10px; transform: rotate(8deg); }
+.ov-photo__tape--l { left: 4px; transform: rotate(-10deg); }
+.ov-photo__tape--r { right: 4px; transform: rotate(8deg); }
 
 /* skills, bottom of the overview page */
 .ov-skills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
