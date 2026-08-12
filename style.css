@@ -355,10 +355,10 @@ body {
 /* taped-on photo under the job title/date */
 .ov-photo {
   position: relative;
-  display: inline-block;
+  display: block;
   width: 256px;
   height: 256px;
-  margin: 8px 0;
+  margin: 8px auto;
   padding: 4px;
   background: #fff;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, .15);
