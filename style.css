@@ -356,9 +356,9 @@ body {
 .ov-photo {
   position: relative;
   display: inline-block;
-  width: 64px;
-  height: 64px;
-  margin: 6px 0;
+  width: 128px;
+  height: 128px;
+  margin: 2px 0;
   padding: 4px;
   background: #fff;
   box-shadow: 2px 3px 6px rgba(0, 0, 0, .15);
