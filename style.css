@@ -330,14 +330,15 @@ body {
 .career-book .hidden { display: none; }
 
 /* details bullets: description on the left, highlighted metric on the right */
-.page-right .dt-list { list-style: none; margin: 0; padding: 0; font-size: 14.5px; }
+.dt-list { list-style: none; margin: 0; padding: 0; font-size: 14.5px; }
 .dt-list li {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 10px;
-  line-height: 28px;
 }
+.page-right .dt-list li { line-height: 28px; }
+.pcard .dt-list li { line-height: 1.5; padding: 4px 0; }
 .dt-text { flex: 1; }
 .dt-metric {
   flex-shrink: 0;
@@ -473,6 +474,26 @@ body {
 .icard h4 { margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 24px; line-height: 1.05; }
 .icard .role { margin: 2px 0 6px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 12px; opacity: .7; }
 .icard p { margin: 0; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; line-height: 1.4; }
+
+/* ---------- project details: a static page under the notebook ---------- */
+.projects-detail { width: 100%; max-width: 900px; margin: 3rem auto 0; }
+.projects-detail__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.pcard { position: relative; text-align: left; padding: 20px 22px; }
+.pcard .sk-frame { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.pcard > * { position: relative; z-index: 1; }
+.pcard h4 { margin: 0 0 4px; font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 24px; line-height: 1.05; }
+.pcard__desc { margin: 0 0 10px; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; font-size: 13px; line-height: 1.4; opacity: .8; }
+.pcard .ov-skills { margin-top: 12px; }
+
+@media (max-width: 640px) {
+  .projects-detail__grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* ---------- skills: colorful tags, right of internship experience ---------- */
 .skills { flex: 1 1 200px; min-width: 200px; }
