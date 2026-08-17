@@ -63,14 +63,4 @@
   document.querySelectorAll('.icard').forEach(function (el) {
     el.addEventListener('click', function (e) { e.preventDefault(); openTo(el.dataset.item); });
   });
-
-  // project sticky notes scroll down to their matching detail card instead
-  // (projects no longer have their own notebook tab)
-  document.querySelectorAll('.pnote').forEach(function (el) {
-    el.addEventListener('click', function (e) {
-      e.preventDefault();
-      var target = document.querySelector('.pcard[data-item="' + el.dataset.item + '"]');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
-  });
 })();

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ur5 motion stack — ethan moon.</title>
+  <meta name="description" content="A ROS 2 Humble workspace that plans and executes collision-free trajectories for a simulated UR5/UR3 arm through MoveIt2 and Gazebo, containerised for reproducibility.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body style="--note:#ffb3a7">
+
+  <svg class="sk-defs" aria-hidden="true">
+    <filter id="sk" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+    </filter>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" class="dg-head"/>
+    </marker>
+  </svg>
+
+  <aside class="sidebar">
+    <div class="sidebar__brand"><a href="index.html" style="color:inherit;text-decoration:none">ethan moon.</a></div>
+    <nav class="sidebar__nav">
+      <a href="index.html#about" class="sidebar__nav-link">about</a>
+      <a href="index.html#works" class="sidebar__nav-link">works</a>
+      <a href="index.html#contact" class="sidebar__nav-link">contact</a>
+    </nav>
+
+    <div class="sidebar__label">projects</div>
+    <nav class="sidebar__projects">
+      <a href="dispatch.html"     class="sidebar__project" style="--dot:#ffe083">dispatch</a>
+      <a href="hunter.html"       class="sidebar__project" style="--dot:#a8d8ff">hunter</a>
+      <a href="ur5-moveit.html"   class="sidebar__project sidebar__project--current" style="--dot:#ffb3a7" aria-current="page">ur5 motion stack</a>
+      <a href="gemx-rby1.html"    class="sidebar__project" style="--dot:#d5c1f2">gem-x rby1</a>
+      <a href="gym-tracker.html"  class="sidebar__project" style="--dot:#a5e6d8">gym tracker</a>
+    </nav>
+  </aside>
+
+  <main class="content content--project">
+
+    <a href="projects.html" class="back-link">&larr; all projects</a>
+
+    <!-- ================= hero ================= -->
+    <header class="p-hero">
+      <div class="p-eyebrow"><i class="swatch"></i> robotics &middot; systems</div>
+      <h1 class="p-title"><span>ur5 motion stack</span></h1>
+      <p class="p-pitch">
+        A ROS 2 Humble workspace that takes a target point in space and turns it
+        into a collision-free trajectory a UR5 arm actually executes — planning
+        through MoveIt2, simulating in Gazebo, and containerised so the whole
+        toolchain comes up the same way on any machine. Built during my work at
+        Argonne National Laboratory.
+      </p>
+
+      <div class="p-links">
+        <a class="p-btn" href="https://github.com/ethanhmoon/ur5-ros2-workspace">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#ffb3a7" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>read the code</span>
+        </a>
+      </div>
+
+      <dl class="p-spec">
+        <div><dt>context</dt><dd>Argonne National Laboratory &middot; AI &amp; Robotics</dd></div>
+        <div><dt>stack</dt><dd>Python, ROS 2 Humble, MoveIt2, Gazebo, Docker</dd></div>
+        <div><dt>hardware modelled</dt><dd>Universal Robots UR5 and UR3</dd></div>
+        <div><dt>status</dt><dd>49 commits &middot; ongoing</dd></div>
+      </dl>
+    </header>
+
+    <!-- ================= problem ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">the problem</h2>
+      <div class="p-body">
+        <p>
+          "Move the gripper to this point" is one sentence and about six hard
+          problems: solve inverse kinematics for a 6-DOF arm, find a path through
+          free space that avoids the arm hitting itself or the table, turn that
+          path into a time-parameterised trajectory the controllers can follow,
+          and do it repeatably enough that you'd trust it near real hardware.
+        </p>
+        <p>
+          Sampling-based planners make the last part the interesting one. They're
+          <strong>stochastic — the same goal can produce a different path every
+          run</strong>, and occasionally no path at all within the time budget.
+          A demo that works once isn't a motion stack. Most of my effort went
+          into making end-to-end execution boringly repeatable.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= architecture ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">how it works</h2>
+      <div class="napkin">
+        <div class="napkin__grid" aria-hidden="true"></div>
+        <svg class="sk-frame" viewBox="0 0 800 450" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="790" height="440" rx="8" fill="#fff" stroke="#1a1a1a" stroke-width="2.4" filter="url(#sk)"/>
+        </svg>
+
+        <svg class="diagram" viewBox="0 0 800 324" role="img"
+             aria-label="UR5 control flow: a Python node publishes an XYZ goal through pymoveit2 to the MoveIt2 planner, which solves inverse kinematics and plans a collision-free path with RRT star. The resulting trajectory goes to ros2_control controllers driving the simulated arm in Gazebo, and joint states feed back to the planner. Everything runs inside a Docker container.">
+
+          <!-- container boundary -->
+          <rect class="dg-group" x="22" y="18" width="716" height="290" rx="10" filter="url(#sk)"/>
+
+          <!-- command row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="40"  y="44" width="160" height="64" rx="5"/>
+            <rect class="dg-box" x="250" y="44" width="160" height="64" rx="5"/>
+            <rect class="dg-box dg-box--accent" x="460" y="44" width="190" height="64" rx="5"/>
+          </g>
+          <text x="120" y="71" text-anchor="middle" font-size="17">xyz goal</text>
+          <text class="dg-label" x="120" y="90" text-anchor="middle">entry_points_node</text>
+
+          <text x="330" y="71" text-anchor="middle" font-size="17">pymoveit2</text>
+          <text class="dg-label" x="330" y="90" text-anchor="middle">task-space request</text>
+
+          <text x="555" y="66" text-anchor="middle" font-size="17">moveit2</text>
+          <text class="dg-label" x="555" y="83" text-anchor="middle">ik + collision checking</text>
+          <text class="dg-label" x="555" y="97" text-anchor="middle">rrt* path planning</text>
+
+          <path class="dg-arrow" d="M200,76 Q223,73.5 246,76" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M410,76 Q433,73.5 456,76" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M555,108 Q557.5,134 555,160" marker-end="url(#ah)"/>
+
+          <!-- execution row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="460" y="164" width="190" height="64" rx="5"/>
+            <rect class="dg-box" x="250" y="164" width="160" height="64" rx="5"/>
+            <rect class="dg-box" x="40"  y="164" width="160" height="64" rx="5"/>
+          </g>
+          <text x="555" y="191" text-anchor="middle" font-size="17">trajectory</text>
+          <text class="dg-label" x="555" y="210" text-anchor="middle">time-parameterised</text>
+
+          <text x="330" y="191" text-anchor="middle" font-size="17">ros2_control</text>
+          <text class="dg-label" x="330" y="210" text-anchor="middle">joint trajectory controller</text>
+
+          <text x="120" y="191" text-anchor="middle" font-size="17">gazebo</text>
+          <text class="dg-label" x="120" y="210" text-anchor="middle">ur5 / ur3 sim</text>
+
+          <path class="dg-arrow" d="M456,196 Q435,193.5 414,196" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M246,196 Q225,193.5 204,196" marker-end="url(#ah)"/>
+
+          <!-- joint state feedback -->
+          <path class="dg-arrow dg-arrow--dash" d="M120,228 L120,272 L712,272 L712,76 L654,76" marker-end="url(#ah)" filter="url(#sk)"/>
+          <text class="dg-label" x="300" y="266">/joint_states &mdash; planning scene stays in sync with the sim</text>
+
+          <text class="dg-label" x="40" y="300">docker &middot; ubuntu 20.04 &middot; ros 2 humble &mdash; one image, identical on every host</text>
+        </svg>
+
+        <p class="napkin__caption">
+          The command node never computes joint angles. It states where the
+          end-effector should be; MoveIt2 owns kinematics, collision checking,
+          and planning.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= build log ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I built</h2>
+      <ul class="p-list">
+        <li>
+          <span>End-to-end simulation and motion planning pipeline for a UR5 manipulator — goal in, executed trajectory out</span>
+          <span class="p-metric">moveit2 &middot; gazebo</span>
+        </li>
+        <li>
+          <span>A Python node that drives the arm to precise Cartesian targets through <code class="p-inline-code">pymoveit2</code>, keeping the command interface in task space rather than joint space</span>
+          <span class="p-metric">pymoveit2</span>
+        </li>
+        <li>
+          <span>Tuned RRT* planning parameters — planning time budget, goal tolerance, and solve attempts — for reliable end-to-end trajectory execution instead of occasional success</span>
+          <span class="p-metric">RRT*</span>
+        </li>
+        <li>
+          <span>Generated and hand-corrected the MoveIt2 configuration package for the arm: planning groups, joint limits, and the collision matrix</span>
+          <span class="p-metric">ur5_moveit_config</span>
+        </li>
+        <li>
+          <span>Fully containerised ROS 2 Humble workspace, so the toolchain, dependencies, and simulator versions are pinned and reproducible on any host</span>
+          <span class="p-metric">docker</span>
+        </li>
+        <li>
+          <span>Supporting packages covering ROS 2 fundamentals — custom interfaces, services, and clients — built as the working foundation for the control node</span>
+          <span class="p-metric">6 packages</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= decisions ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">decisions worth defending</h2>
+      <div class="p-decisions">
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">01</div>
+          <h4>Command in task space, not joint space</h4>
+          <p>
+            The node asks for an XYZ pose and lets MoveIt2 solve IK. Publishing
+            joint angles directly would have been simpler and would have thrown
+            away collision checking, joint limit enforcement, and any ability to
+            retarget to a different arm.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> less direct control over the exact configuration
+            reached. The right answer when the goal is a position, not a pose.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">02</div>
+          <h4>Tune for repeatability, not planning speed</h4>
+          <p>
+            RRT* is asymptotically optimal but stochastic — short time budgets
+            give you fast paths that sometimes fail or come out ugly. I traded
+            planning latency for a success rate I could rely on across repeated
+            runs, because an intermittent failure in a motion stack is worse
+            than a slow one.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> higher latency per goal. Acceptable for point-to-point
+            positioning; would need revisiting for reactive motion.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">03</div>
+          <h4>Containerise the whole toolchain</h4>
+          <p>
+            ROS 2 plus Gazebo plus MoveIt2 is a dependency graph that breaks
+            differently on every machine. Pinning it in a Docker image means
+            "it works on mine" stops being a caveat — the environment is an
+            artifact, versioned alongside the code.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> GUI forwarding and device passthrough add friction.
+            Paid once, in the Dockerfile, instead of on every fresh setup.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">04</div>
+          <h4>Simulate first, and mean it</h4>
+          <p>
+            Gazebo isn't a stand-in for hardware here, it's the test harness. A
+            planning bug that would cost a self-collision on a real UR5 costs a
+            restarted process in simulation, so I could be aggressive about
+            probing failure modes.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> sim-to-real gap in dynamics and contact. Fine
+            while the questions are about planning and kinematics.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= screens ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">the arm</h2>
+      <div class="p-shots">
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <img src="Images/ur.png" alt="Universal Robots arm used for the motion planning work at Argonne">
+          <figcaption>The UR platform this workspace targets.</figcaption>
+        </figure>
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            planning scene
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>Planned trajectory and collision geometry in the planning scene.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= next ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I'd build next</h2>
+      <div class="p-body">
+        <p>
+          <strong>Planner benchmarking.</strong> Run the same goal set across
+          RRT*, RRTConnect, and BiTRRT and record success rate, planning time,
+          and path length. Turn the tuning I did by feel into numbers.
+        </p>
+        <p>
+          <strong>Perception-driven goals.</strong> The 2022 work here used
+          sensor-driven control through inverse kinematics; wiring a camera into
+          the planning scene closes the loop between seeing an object and
+          reaching for it.
+        </p>
+        <p>
+          <strong>Hardware bring-up.</strong> The same MoveIt2 config should
+          drive a physical UR5 through the UR driver. That's where the
+          sim-to-real assumptions get tested for real.
+        </p>
+      </div>
+    </section>
+
+    <nav class="p-next">
+      <div class="p-next__side">
+        <span>previous</span>
+        <a href="hunter.html">&larr; hunter</a>
+      </div>
+      <div class="p-next__side p-next__side--right">
+        <span>next project</span>
+        <a href="gemx-rby1.html">gem-x rby1 &rarr;</a>
+      </div>
+    </nav>
+
+  </main>
+</body>
+</html>

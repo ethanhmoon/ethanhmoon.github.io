@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>projects — ethan moon.</title>
+  <meta name="description" content="Project write-ups from Ethan Moon: full-stack web, data pipelines, and robotics motion planning — with architecture, decisions, and trade-offs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body style="--note:#ffe083">
+
+  <svg class="sk-defs" aria-hidden="true">
+    <filter id="sk" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+    </filter>
+  </svg>
+
+  <aside class="sidebar">
+    <div class="sidebar__brand"><a href="index.html" style="color:inherit;text-decoration:none">ethan moon.</a></div>
+    <nav class="sidebar__nav">
+      <a href="index.html#about" class="sidebar__nav-link">about</a>
+      <a href="index.html#works" class="sidebar__nav-link">works</a>
+      <a href="index.html#contact" class="sidebar__nav-link">contact</a>
+    </nav>
+
+    <div class="sidebar__label">projects</div>
+    <nav class="sidebar__projects">
+      <a href="dispatch.html"     class="sidebar__project" style="--dot:#ffe083">dispatch</a>
+      <a href="hunter.html"       class="sidebar__project" style="--dot:#a8d8ff">hunter</a>
+      <a href="ur5-moveit.html"   class="sidebar__project" style="--dot:#ffb3a7">ur5 motion stack</a>
+      <a href="gemx-rby1.html"    class="sidebar__project" style="--dot:#d5c1f2">gem-x rby1</a>
+      <a href="gym-tracker.html"  class="sidebar__project" style="--dot:#a5e6d8">gym tracker</a>
+    </nav>
+  </aside>
+
+  <main class="content content--project">
+
+    <a href="index.html" class="back-link">&larr; home</a>
+
+    <header class="p-hero">
+      <div class="p-eyebrow"><i class="swatch"></i> write-ups</div>
+      <h1 class="p-title"><span>projects</span></h1>
+      <p class="hub-intro">
+        Five things I built, written up properly: the problem, the architecture,
+        the decisions I'd defend in a review, and the trade-offs I accepted. Each
+        page has a hand-drawn diagram of how the system actually fits together,
+        because that's the part a README never tells you.
+      </p>
+    </header>
+
+    <div class="hub-grid">
+
+      <a class="hub-card" href="dispatch.html" style="--c:#ffe083">
+        <svg class="sk-frame" viewBox="0 0 320 260" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="310" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+        </svg>
+        <span class="hub-card__tag">full-stack web</span>
+        <h3>dispatch</h3>
+        <p>
+          A news reader with a bottom. Topic selection is the product, not a
+          setting — so the feed only ever contains what you asked for.
+          Node/Express, Supabase, live on Vercel.
+        </p>
+        <span class="hub-card__more">read the write-up &rarr;</span>
+      </a>
+
+      <a class="hub-card" href="hunter.html" style="--c:#a8d8ff">
+        <svg class="sk-frame" viewBox="0 0 320 260" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="310" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+        </svg>
+        <span class="hub-card__tag">data pipeline</span>
+        <h3>hunter</h3>
+        <p>
+          13 job boards in, one trustworthy list out. Deduplicated by canonical
+          URL, scored by rules you can read, and honest about which postings are
+          already dead. FastAPI + SQLite, 344+ tests.
+        </p>
+        <span class="hub-card__more">read the write-up &rarr;</span>
+      </a>
+
+      <a class="hub-card" href="ur5-moveit.html" style="--c:#ffb3a7">
+        <svg class="sk-frame" viewBox="0 0 320 260" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="310" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+        </svg>
+        <span class="hub-card__tag">robotics</span>
+        <h3>ur5 motion stack</h3>
+        <p>
+          Point in space to executed trajectory, through MoveIt2 and Gazebo, with
+          RRT* tuned for repeatability rather than speed. Whole ROS 2 Humble
+          toolchain pinned in Docker. Argonne.
+        </p>
+        <span class="hub-card__more">read the write-up &rarr;</span>
+      </a>
+
+      <a class="hub-card" href="gemx-rby1.html" style="--c:#d5c1f2">
+        <svg class="sk-frame" viewBox="0 0 320 260" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="310" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+        </svg>
+        <span class="hub-card__tag">computer vision</span>
+        <h3>gem-x rby1</h3>
+        <p>
+          Extending NVIDIA's monocular whole-body pose model toward new humanoid
+          platforms, by pulling every platform assumption out of the pipeline and
+          into a swappable retargeting layer.
+        </p>
+        <span class="hub-card__more">read the write-up &rarr;</span>
+      </a>
+
+      <a class="hub-card" href="gym-tracker.html" style="--c:#a5e6d8">
+        <svg class="sk-frame" viewBox="0 0 320 260" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="310" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+        </svg>
+        <span class="hub-card__tag">data modelling</span>
+        <h3>gym tracker</h3>
+        <p>
+          An append-only lifting log where nothing overwrites a past PR. Every
+          statistic is a query over immutable rows, so streaks, trends, and four
+          record types all fall out of one design choice.
+        </p>
+        <span class="hub-card__more">read the write-up &rarr;</span>
+      </a>
+
+    </div>
+
+    <nav class="p-next">
+      <div class="p-next__side">
+        <span>the rest of the site</span>
+        <a href="index.html">home</a>
+      </div>
+      <div class="p-next__side p-next__side--right">
+        <span>hiring, or just curious?</span>
+        <a href="index.html#contact">get in touch &rarr;</a>
+      </div>
+    </nav>
+
+  </main>
+</body>
+</html>

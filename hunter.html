@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>hunter — ethan moon.</title>
+  <meta name="description" content="Hunter: a local-first job aggregator that pulls new-grad roles from 13 sources, dedupes them, scores them deterministically, and hides dead postings automatically. FastAPI + SQLite.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body style="--note:#a8d8ff">
+
+  <svg class="sk-defs" aria-hidden="true">
+    <filter id="sk" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+    </filter>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" class="dg-head"/>
+    </marker>
+  </svg>
+
+  <aside class="sidebar">
+    <div class="sidebar__brand"><a href="index.html" style="color:inherit;text-decoration:none">ethan moon.</a></div>
+    <nav class="sidebar__nav">
+      <a href="index.html#about" class="sidebar__nav-link">about</a>
+      <a href="index.html#works" class="sidebar__nav-link">works</a>
+      <a href="index.html#contact" class="sidebar__nav-link">contact</a>
+    </nav>
+
+    <div class="sidebar__label">projects</div>
+    <nav class="sidebar__projects">
+      <a href="dispatch.html"     class="sidebar__project" style="--dot:#ffe083">dispatch</a>
+      <a href="hunter.html"       class="sidebar__project sidebar__project--current" style="--dot:#a8d8ff" aria-current="page">hunter</a>
+      <a href="ur5-moveit.html"   class="sidebar__project" style="--dot:#ffb3a7">ur5 motion stack</a>
+      <a href="gemx-rby1.html"    class="sidebar__project" style="--dot:#d5c1f2">gem-x rby1</a>
+      <a href="gym-tracker.html"  class="sidebar__project" style="--dot:#a5e6d8">gym tracker</a>
+    </nav>
+  </aside>
+
+  <main class="content content--project">
+
+    <a href="projects.html" class="back-link">&larr; all projects</a>
+
+    <!-- ================= hero ================= -->
+    <header class="p-hero">
+      <div class="p-eyebrow"><i class="swatch"></i> data pipeline &middot; backend</div>
+      <h1 class="p-title"><span>hunter</span></h1>
+      <p class="p-pitch">
+        A job aggregator I built because I was the user. It pulls full-time
+        new-grad postings from 13 ATS boards and aggregators, collapses the
+        duplicates, scores every listing with rules I can read, and quietly hides
+        the ones that have already closed. Runs entirely on your machine — no
+        account, no server, no telemetry.
+      </p>
+
+      <div class="p-links">
+        <a class="p-btn" href="https://github.com/ethanhmoon/Health-Tracker">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#a8d8ff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>read the code</span>
+        </a>
+      </div>
+
+      <dl class="p-spec">
+        <div><dt>my role</dt><dd>Sole engineer — ingest, scoring, API, UI</dd></div>
+        <div><dt>stack</dt><dd>Python, FastAPI, SQLite, Chart.js</dd></div>
+        <div><dt>scale</dt><dd>13 sources &middot; 344+ tests &middot; 125+ commits</dd></div>
+        <div><dt>status</dt><dd>Actively developed</dd></div>
+      </dl>
+    </header>
+
+    <!-- ================= problem ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">the problem</h2>
+      <div class="p-body">
+        <p>
+          Applying to new-grad roles is a data quality problem wearing a career
+          costume. The same posting appears on four aggregators under three
+          titles. Half the listings on any given board are already filled but
+          still indexed. Every job site wants an account before it will show you
+          anything, and then ranks by whoever paid for placement.
+        </p>
+        <p>
+          I wanted one list I could trust: <strong>deduplicated, ranked by
+          criteria I chose, and honest about which postings are dead.</strong>
+          The interesting engineering isn't the scraping — it's identity,
+          freshness, and making 13 fragile upstream sources behave like one
+          reliable table.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= architecture ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">how it works</h2>
+      <div class="napkin">
+        <div class="napkin__grid" aria-hidden="true"></div>
+        <svg class="sk-frame" viewBox="0 0 800 560" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="790" height="550" rx="8" fill="#fff" stroke="#1a1a1a" stroke-width="2.4" filter="url(#sk)"/>
+        </svg>
+
+        <svg class="diagram" viewBox="0 0 800 425" role="img"
+             aria-label="Hunter pipeline: thirteen job sources are read by per-source adapters, normalised with canonical URLs, deduplicated and scored, then written to SQLite. FastAPI serves a local browser UI from that database. A liveness checker re-requests stored postings and marks the ones returning 404 or 410 as hidden.">
+
+          <!-- ingest row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="40"  y="36" width="160" height="64" rx="5"/>
+            <rect class="dg-box" x="250" y="36" width="160" height="64" rx="5"/>
+            <rect class="dg-box" x="460" y="36" width="190" height="64" rx="5"/>
+          </g>
+          <text x="120" y="63" text-anchor="middle" font-size="17">13 sources</text>
+          <text class="dg-label" x="120" y="82" text-anchor="middle">ats boards + aggregators</text>
+
+          <text x="330" y="63" text-anchor="middle" font-size="17">source adapters</text>
+          <text class="dg-label" x="330" y="82" text-anchor="middle">one per board</text>
+
+          <text x="555" y="63" text-anchor="middle" font-size="17">normalise</text>
+          <text class="dg-label" x="555" y="82" text-anchor="middle">canonical url as identity</text>
+
+          <path class="dg-arrow" d="M200,68 Q223,65.5 246,68" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M410,68 Q433,65.5 456,68" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M555,100 Q557.5,126 555,152" marker-end="url(#ah)"/>
+
+          <!-- dedupe + score, then store -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="460" y="156" width="190" height="64" rx="5"/>
+            <rect class="dg-box dg-box--accent" x="250" y="156" width="160" height="64" rx="5"/>
+          </g>
+          <text x="555" y="183" text-anchor="middle" font-size="17">dedupe + score</text>
+          <text class="dg-label" x="555" y="202" text-anchor="middle">deterministic rules</text>
+
+          <text x="330" y="183" text-anchor="middle" font-size="17">sqlite</text>
+          <text class="dg-label" x="330" y="202" text-anchor="middle">single local file</text>
+
+          <path class="dg-arrow" d="M456,188 Q435,185.5 414,188" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M330,220 Q332.5,253 330,286" marker-end="url(#ah)"/>
+
+          <!-- serve row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="250" y="290" width="160" height="64" rx="5"/>
+            <rect class="dg-box" x="40"  y="290" width="160" height="64" rx="5"/>
+            <rect class="dg-box dg-box--soft" x="480" y="290" width="180" height="64" rx="5"/>
+          </g>
+          <text x="330" y="317" text-anchor="middle" font-size="17">fastapi</text>
+          <text class="dg-label" x="330" y="336" text-anchor="middle">localhost only</text>
+
+          <text x="120" y="317" text-anchor="middle" font-size="17">browser ui</text>
+          <text class="dg-label" x="120" y="336" text-anchor="middle">filter, sort, apply</text>
+
+          <text x="570" y="317" text-anchor="middle" font-size="17">liveness check</text>
+          <text class="dg-label" x="570" y="336" text-anchor="middle">404 / 410 &rarr; hidden</text>
+
+          <path class="dg-arrow" d="M246,322 Q225,319.5 204,322" marker-end="url(#ah)"/>
+
+          <!-- liveness loop -->
+          <path class="dg-arrow dg-arrow--dash" d="M414,205 C452,205 450,300 476,315" marker-end="url(#ah)" filter="url(#sk)"/>
+          <path class="dg-arrow dg-arrow--dash" d="M570,290 L570,248 L346,248 L340,224" marker-end="url(#ah)" filter="url(#sk)"/>
+          <text class="dg-label" x="352" y="270">re-verify on every refresh</text>
+
+          <text class="dg-label" x="40" y="404">nothing leaves the machine &mdash; no account, no hosted backend</text>
+        </svg>
+
+        <p class="napkin__caption">
+          Ingest and serving are separate concerns joined by one SQLite file.
+          The liveness loop treats stored postings as a cache of a remote truth
+          and re-checks them rather than trusting them.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= build log ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I built</h2>
+      <ul class="p-list">
+        <li>
+          <span>An adapter per upstream board, each responsible for one API or markup quirk and all emitting the same normalised posting record</span>
+          <span class="p-metric">13 sources</span>
+        </li>
+        <li>
+          <span>Canonical-URL identity: strip tracking parameters and fragments, then key on the result — the same role syndicated across four aggregators collapses to one row</span>
+          <span class="p-metric">url dedupe</span>
+        </li>
+        <li>
+          <span>A deterministic scorer — same input, same score, every run. No model, no randomness, and every point in a listing's score is traceable to a rule</span>
+          <span class="p-metric">explainable</span>
+        </li>
+        <li>
+          <span>Liveness pass on every refresh that re-requests stored postings and auto-hides anything returning 404 or 410, so closed roles stop wasting your time</span>
+          <span class="p-metric">404/410 check</span>
+        </li>
+        <li>
+          <span>Test suite covering adapters, normalisation, dedupe, and scoring — the safety net that makes changing a fragile adapter a five-minute job instead of a gamble</span>
+          <span class="p-metric">344+ tests</span>
+        </li>
+        <li>
+          <span>Ships as a local FastAPI app against a single SQLite file: clone, run, open localhost. No signup, no hosting bill, no data leaving the machine</span>
+          <span class="p-metric">local-first</span>
+        </li>
+        <li>
+          <span>Sustained iteration rather than a weekend push — sources added, adapters repaired, scoring tuned against real applications</span>
+          <span class="p-metric">125+ commits</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= decisions ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">decisions worth defending</h2>
+      <div class="p-decisions">
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 280" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="270" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">01</div>
+          <h4>Deterministic scoring, not a model</h4>
+          <p>
+            An ML ranker would have been the flashier choice. But I had no
+            labelled data, no way to evaluate it, and a hard requirement that I
+            be able to answer "why is this job ranked third?" Rules give me
+            reproducibility and unit tests; a model would have given me a
+            plausible-looking black box.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> the rules need hand-tuning as my priorities change.
+            That's a config edit, and it's visible — which is the point.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 280" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="270" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">02</div>
+          <h4>Local-first, SQLite, no accounts</h4>
+          <p>
+            The moment there's a hosted backend there's auth, a database bill,
+            a privacy policy, and a migration story. SQLite plus localhost
+            removes all four. Your search history stays on your disk, and the
+            whole app is one file you can back up or delete.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> no sync across devices, and single-writer
+            concurrency. Correct call for a tool with exactly one user.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 280" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="270" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">03</div>
+          <h4>Verify freshness, don't assume it</h4>
+          <p>
+            Most aggregators show you postings they indexed weeks ago and never
+            revisited. I treat the local table as a cache with no TTL guarantee
+            from upstream, so every refresh re-requests stored listings and
+            demotes the dead ones on the evidence of an actual HTTP status.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> more outbound requests per refresh. Bounded by
+            checking only what's already stored, and hiding rather than deleting
+            so a flaky 404 is recoverable.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 280" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="270" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">04</div>
+          <h4>Tests as the contract for fragile inputs</h4>
+          <p>
+            13 upstream sources means something breaks most weeks — a renamed
+            field, a changed layout, an added redirect. The 344+ tests exist
+            because scraped input is adversarial by nature. When a board changes,
+            a test tells me which adapter and which field, in seconds.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> fixtures need refreshing as real responses drift.
+            Cheaper than debugging silent data corruption downstream.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= screens ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">screens</h2>
+      <div class="p-shots">
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            scored listings
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>The ranked list — score visible on every row.</figcaption>
+        </figure>
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            source health
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>Per-source status after a refresh, including hidden dead postings.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= next ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I'd build next</h2>
+      <div class="p-body">
+        <p>
+          <strong>Title-similarity dedupe.</strong> URL identity is cheap and
+          correct but conservative. Near-duplicate detection on normalised titles
+          plus company would catch the rest.
+        </p>
+        <p>
+          <strong>Adapter health monitoring.</strong> If a source silently
+          returns zero results for three runs, that's a broken adapter, not an
+          empty board. It should page me.
+        </p>
+        <p>
+          <strong>Application tracking.</strong> The natural next table: what I
+          applied to, when, and what came back — closing the loop between the
+          scoring rules and the outcomes that would validate them.
+        </p>
+      </div>
+    </section>
+
+    <nav class="p-next">
+      <div class="p-next__side">
+        <span>previous</span>
+        <a href="dispatch.html">&larr; dispatch</a>
+      </div>
+      <div class="p-next__side p-next__side--right">
+        <span>next project</span>
+        <a href="ur5-moveit.html">ur5 motion stack &rarr;</a>
+      </div>
+    </nav>
+
+  </main>
+</body>
+</html>

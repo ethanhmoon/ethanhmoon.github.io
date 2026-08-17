@@ -237,29 +237,30 @@
       <div class="works-layout">
         <div class="projects">
           <div class="section-tag">projects</div>
+          <a class="projects-more" href="projects.html">read the full write-ups &rarr;</a>
           <div class="sticky-row">
-            <a class="pnote" data-item="dispatch" href="#" onclick="return false" style="--c:#ffe083">
+            <a class="pnote" data-item="dispatch" href="dispatch.html" style="--c:#ffe083">
               <svg class="sk-fill" viewBox="0 0 150 150" preserveAspectRatio="none">
                 <rect x="5" y="5" width="140" height="140" fill="#ffe083" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
               </svg>
               <span class="pname">dispatch</span>
               <span class="pblurb">full-stack news app<br>node/express + supabase</span>
             </a>
-            <a class="pnote" data-item="hunter" href="#" onclick="return false" style="--c:#a8d8ff">
+            <a class="pnote" data-item="hunter" href="hunter.html" style="--c:#a8d8ff">
               <svg class="sk-fill" viewBox="0 0 150 150" preserveAspectRatio="none">
                 <rect x="5" y="5" width="140" height="140" fill="#a8d8ff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
               </svg>
               <span class="pname">hunter</span>
               <span class="pblurb">job aggregator<br>fastapi + sqlite</span>
             </a>
-            <a class="pnote" data-item="gemx" href="#" onclick="return false" style="--c:#d5c1f2">
+            <a class="pnote" data-item="gemx" href="gemx-rby1.html" style="--c:#d5c1f2">
               <svg class="sk-fill" viewBox="0 0 150 150" preserveAspectRatio="none">
                 <rect x="5" y="5" width="140" height="140" fill="#d5c1f2" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
               </svg>
               <span class="pname">gem-x rby1</span>
               <span class="pblurb">humanoid motion<br>retargeting fork</span>
             </a>
-            <a class="pnote" data-item="gym" href="#" onclick="return false" style="--c:#a5e6d8">
+            <a class="pnote" data-item="gym" href="gym-tracker.html" style="--c:#a5e6d8">
               <svg class="sk-fill" viewBox="0 0 150 150" preserveAspectRatio="none">
                 <rect x="5" y="5" width="140" height="140" fill="#a5e6d8" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
               </svg>
@@ -327,37 +328,40 @@
               <div class="dt" data-item="argonne">
                 <p class="cap">details</p>
                 <ul class="dt-list">
-                  <li><span class="dt-text">robotic arm sim + motion planning pipeline for a UR5 manipulator</span><span class="dt-metric">moveit2 &middot; gazebo</span></li>
-                  <li><span class="dt-text">tuned RRT* path planning for reliable end-to-end trajectory execution</span></li>
-                  <li><span class="dt-text">commands the arm to precise XYZ targets via pymoveit2</span></li>
-                  <li><span class="dt-text">ROS 2 Humble workspace, dockerized on Ubuntu 20.04</span><span class="dt-metric">9 commits</span></li>
-                  <li><span class="dt-text">also interned here in 2022 &mdash; sensor-driven control via inverse kinematics</span></li>
+                  <li><span class="dt-text">- robotic arm sim + motion planning pipeline for a UR5 manipulator</span><span class="dt-metric">moveit2 &middot; gazebo</span></li>
+                  <li><span class="dt-text">- tuned RRT* path planning for reliable and repeatable end-to-end trajectory execution</span></li>
+                  <li><span class="dt-text">- commands the arm to precise XYZ targets via pymoveit2</span></li>
+                  <li><span class="dt-text">- ROS 2 Humble workspace, docker on Ubuntu 20.04</span><span class="dt-metric">Version Control</span></li>
+                  <li><span class="dt-text">- also interned here in 2022 &mdash; sensor-driven control via inverse kinematics</span></li>
                 </ul>
+                <a class="dt-more" href="ur5-moveit.html">full write-up: ur5 motion stack &rarr;</a>
               </div>
               <div class="dt hidden" data-item="fermilab">
                 <p class="cap">details</p>
                 <ul class="dt-list">
-                  <li><span class="dt-text">automated generation + filtering of simulation logs via python</span><span class="dt-metric">18,000+ logs</span></li>
-                  <li><span class="dt-text">profiled + optimized python backend across terabyte-scale ingestion</span><span class="dt-metric">TB-scale</span></li>
-                  <li><span class="dt-text">root-caused latency/throughput issues via logging, metrics, controlled experiments</span></li>
-                  <li><span class="dt-text">supported distributed job scheduling with platform engineers</span><span class="dt-metric">glideinwms</span></li>
+                  <li><span class="dt-text">- automated generation + filtering of simulation logs via python</span><span class="dt-metric">18,000+ logs</span></li>
+                  <li><span class="dt-text">- profiled + optimized python backend across terabyte-scale ingestion</span><span class="dt-metric">TB-scale</span></li>
+                  <li><span class="dt-text">- root-caused latency/throughput issues via logging, metrics, controlled experiments</span></li>
+                  <li><span class="dt-text">- supported distributed job scheduling with platform engineers</span><span class="dt-metric">glideinwms</span></li>
                 </ul>
               </div>
               <div class="dt hidden" data-item="pnnl">
                 <p class="cap">details</p>
                 <ul class="dt-list">
-                  <li><span class="dt-text">eliminated redundant fields across ingestion pipelines</span><span class="dt-metric">&minus;45% volume</span></li>
-                  <li><span class="dt-text">streamlined log storage, cutting projected costs</span><span class="dt-metric">$500k+/yr</span></li>
-                  <li><span class="dt-text">designed scalable daily pipelines under retention constraints</span><span class="dt-metric">2 TB/day</span></li>
-                  <li><span class="dt-text">built a data-value scoring framework, surfaced via tableau dashboards</span></li>
-                  <li><span class="dt-text">analyzed ingestion patterns with splunk (SPL) + sql</span></li>
+                  <li><span class="dt-text">- eliminated redundant fields across ingestion pipelines</span><span class="dt-metric">&minus;45% volume</span></li>
+                  <li><span class="dt-text">- streamlined log storage, cutting projected costs</span><span class="dt-metric">$500k+/yr</span></li>
+                  <li><span class="dt-text">- designed scalable daily pipelines under retention constraints</span><span class="dt-metric">2 TB/day</span></li>
+                  <li><span class="dt-text">- built a data-value scoring framework, surfaced via tableau dashboards</span></li>
+                  <li><span class="dt-text">- analyzed ingestion patterns with splunk (SPL) + sql</span></li>
                 </ul>
               </div>
               <div class="dt hidden" data-item="umd">
                 <p class="cap">details</p>
                 <ul class="dt-list">
-                  <li><span class="dt-text">Bachelor of Science in Information Science</span><span class="dt-metric">aug 2026</span></li>
-                  <li><span class="dt-text">presented splunk data management solutions at the DOE Cybersecurity and Technology Innovation Conference</span><span class="dt-metric">2024</span></li>
+                  <li><span class="dt-text">Bachelor of Science in Information Science</span><span class="dt-metric">2026</span></li>
+                  <li><span class="dt-text">- UMD Club Soccer</span><span class="dt-metric">All 4!</span></li>
+                  <li><span class="dt-text">- Theta Chi Fraternity</span></li>
+                  <li><span class="dt-text">- Weight Lifting Club</span></li>
                 </ul>
               </div>
             </div>
@@ -444,14 +448,13 @@
                   </div>
                 </div>
                 <div class="ov hidden" data-item="umd">
-                  <h3>university of maryland</h3>
+                  <h3>University of Maryland</h3>
                   <p class="sub">B.S. Information Science &middot; College Park &middot; August 2026</p>
                   <div class="ov-photo">
                     <span class="ov-photo__tape ov-photo__tape--l"></span>
                     <span class="ov-photo__tape ov-photo__tape--r"></span>
                     <img src="Images/grad.jpg" alt="">
                   </div>
-                  <p>where it all started &mdash; four years, one degree.</p>
                 </div>
               </div>
             </div>
@@ -483,85 +486,7 @@
         </div>
       </div>
 
-      <div class="projects-detail">
-        <div class="section-tag">project details</div>
-        <div class="projects-detail__grid">
-          <div class="pcard" data-item="dispatch">
-            <svg class="sk-frame" viewBox="0 0 260 230" preserveAspectRatio="none">
-              <rect x="5" y="5" width="250" height="220" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
-            </svg>
-            <h4>dispatch</h4>
-            <p class="pcard__desc">a news aggregator that filters down to what you actually care about.</p>
-            <ul class="dt-list">
-              <li><span class="dt-text">full-stack news aggregator with topic-filtered, digestible updates</span></li>
-              <li><span class="dt-text">express + supabase backend</span></li>
-              <li><span class="dt-text">deployed and live</span><span class="dt-metric">vercel</span></li>
-            </ul>
-            <div class="ov-skills">
-              <span class="ov-skill">javascript</span>
-              <span class="ov-skill">express</span>
-              <span class="ov-skill">supabase</span>
-            </div>
-          </div>
 
-          <div class="pcard" data-item="hunter">
-            <svg class="sk-frame" viewBox="0 0 260 230" preserveAspectRatio="none">
-              <rect x="5" y="5" width="250" height="220" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
-            </svg>
-            <h4>hunter</h4>
-            <p class="pcard__desc">aggregates, scores, and dedupes new-grad job postings &mdash; locally, no signup.</p>
-            <ul class="dt-list">
-              <li><span class="dt-text">aggregates full-time new-grad roles across ATS boards + aggregators</span><span class="dt-metric">13 sources</span></li>
-              <li><span class="dt-text">deduplicates by url, scores every listing deterministically</span></li>
-              <li><span class="dt-text">auto-hides dead postings on every refresh</span><span class="dt-metric">404/410 check</span></li>
-              <li><span class="dt-text">fastapi + sqlite, fully local, no signup</span><span class="dt-metric">344+ tests</span></li>
-              <li><span class="dt-text">actively developed</span><span class="dt-metric">125+ commits</span></li>
-            </ul>
-            <div class="ov-skills">
-              <span class="ov-skill">python</span>
-              <span class="ov-skill">fastapi</span>
-              <span class="ov-skill">sqlite</span>
-            </div>
-          </div>
-
-          <div class="pcard" data-item="gemx">
-            <svg class="sk-frame" viewBox="0 0 260 230" preserveAspectRatio="none">
-              <rect x="5" y="5" width="250" height="220" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
-            </svg>
-            <h4>gem-x rby1</h4>
-            <p class="pcard__desc">extending nvidia's human motion model toward new robot platforms.</p>
-            <ul class="dt-list">
-              <li><span class="dt-text">forked nvidia's GEM-X monocular 3d human pose model</span><span class="dt-metric">77-joint</span></li>
-              <li><span class="dt-text">base pipeline retargets motion to a unitree g1 humanoid</span><span class="dt-metric">soma retargeter</span></li>
-              <li><span class="dt-text">exploring retargeting to additional robot platforms</span></li>
-            </ul>
-            <div class="ov-skills">
-              <span class="ov-skill">pytorch</span>
-              <span class="ov-skill">computer vision</span>
-            </div>
-          </div>
-
-          <div class="pcard" data-item="gym">
-            <svg class="sk-frame" viewBox="0 0 260 230" preserveAspectRatio="none">
-              <rect x="5" y="5" width="250" height="220" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
-            </svg>
-            <h4>gym tracker</h4>
-            <p class="pcard__desc">the lifting tracker built inside hunter &middot; part of hunter</p>
-            <ul class="dt-list">
-              <li><span class="dt-text">six fixed muscle-group categories</span></li>
-              <li><span class="dt-text">append-only workout history &mdash; nothing overwrites a past PR</span></li>
-              <li><span class="dt-text">estimated 1RM via the epley formula</span></li>
-              <li><span class="dt-text">auto-tracks max weight, best volume, best set, longest streak</span><span class="dt-metric">4 PR types</span></li>
-              <li><span class="dt-text">weight/volume charts update instantly, zero network dependency</span><span class="dt-metric">chart.js</span></li>
-            </ul>
-            <div class="ov-skills">
-              <span class="ov-skill">javascript</span>
-              <span class="ov-skill">chart.js</span>
-              <span class="ov-skill">sqlite</span>
-            </div>
-          </div>
-        </div>
-      </div>
     </section>
 
     <section id="contact" class="page-section">

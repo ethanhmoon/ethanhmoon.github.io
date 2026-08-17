@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dispatch — ethan moon.</title>
+  <meta name="description" content="Dispatch: a mobile-first news aggregator that filters the feed down to the topics you actually follow. Node/Express + Supabase, deployed on Vercel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body style="--note:#ffe083">
+
+  <!-- the wobble filter, same one the home page uses -->
+  <svg class="sk-defs" aria-hidden="true">
+    <filter id="sk" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+    </filter>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" class="dg-head"/>
+    </marker>
+  </svg>
+
+  <aside class="sidebar">
+    <div class="sidebar__brand"><a href="index.html" style="color:inherit;text-decoration:none">ethan moon.</a></div>
+    <nav class="sidebar__nav">
+      <a href="index.html#about" class="sidebar__nav-link">about</a>
+      <a href="index.html#works" class="sidebar__nav-link">works</a>
+      <a href="index.html#contact" class="sidebar__nav-link">contact</a>
+    </nav>
+
+    <div class="sidebar__label">projects</div>
+    <nav class="sidebar__projects">
+      <a href="dispatch.html"     class="sidebar__project sidebar__project--current" style="--dot:#ffe083" aria-current="page">dispatch</a>
+      <a href="hunter.html"       class="sidebar__project" style="--dot:#a8d8ff">hunter</a>
+      <a href="ur5-moveit.html"   class="sidebar__project" style="--dot:#ffb3a7">ur5 motion stack</a>
+      <a href="gemx-rby1.html"    class="sidebar__project" style="--dot:#d5c1f2">gem-x rby1</a>
+      <a href="gym-tracker.html"  class="sidebar__project" style="--dot:#a5e6d8">gym tracker</a>
+    </nav>
+  </aside>
+
+  <main class="content content--project">
+
+    <a href="projects.html" class="back-link">&larr; all projects</a>
+
+    <!-- ================= hero ================= -->
+    <header class="p-hero">
+      <div class="p-eyebrow"><i class="swatch"></i> full-stack web</div>
+      <h1 class="p-title"><span>dispatch</span></h1>
+      <p class="p-pitch">
+        A news reader that starts from the opposite premise of every other one: you
+        pick the handful of topics you actually follow, and the feed never grows
+        past them. Node/Express API, Supabase for storage and auth, built
+        mobile-first and shipped on Vercel.
+      </p>
+
+      <div class="p-links">
+        <a class="p-btn" href="https://github.com/ethanhmoon/dispatch">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#ffe083" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>read the code</span>
+        </a>
+      </div>
+
+      <dl class="p-spec">
+        <div><dt>my role</dt><dd>Full-stack — schema, API, and client</dd></div>
+        <div><dt>stack</dt><dd>JavaScript, Node/Express, Supabase&nbsp;(Postgres), Vercel</dd></div>
+        <div><dt>surface</dt><dd>Mobile web, iOS Safari first</dd></div>
+        <div><dt>status</dt><dd>Deployed and live</dd></div>
+      </dl>
+    </header>
+
+    <!-- ================= problem ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">the problem</h2>
+      <div class="p-body">
+        <p>
+          Every mainstream news app optimises for time-on-app. The feed is
+          deliberately bottomless, the ranking is opaque, and the topics you care
+          about get diluted by whatever is trending. If you follow three subjects
+          closely, you end up scrolling past forty stories to find them.
+        </p>
+        <p>
+          Dispatch inverts that. <strong>Topic selection is the product</strong>,
+          not a settings-menu afterthought. You declare your topics up front, the
+          backend only stores and serves stories that match, and the feed has a
+          bottom you can actually reach. Getting there meant treating "what
+          counts as this topic" as a data modelling problem rather than a
+          ranking problem.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= architecture (signature) ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">how it works</h2>
+      <div class="napkin">
+        <div class="napkin__grid" aria-hidden="true"></div>
+        <svg class="sk-frame" viewBox="0 0 800 420" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="790" height="410" rx="8" fill="#fff" stroke="#1a1a1a" stroke-width="2.4" filter="url(#sk)"/>
+        </svg>
+
+        <svg class="diagram" viewBox="0 0 800 330" role="img"
+             aria-label="Dispatch data flow: news sources are fetched and normalised, tagged by topic, written to Supabase Postgres, then read back through an Express API and rendered in the mobile client. The API and client are deployed together on Vercel.">
+
+          <!-- ingest row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="30"  y="46" width="170" height="66" rx="5"/>
+            <rect class="dg-box" x="250" y="46" width="170" height="66" rx="5"/>
+            <rect class="dg-box" x="470" y="46" width="170" height="66" rx="5"/>
+          </g>
+          <text x="115" y="74" text-anchor="middle" font-size="17">news sources</text>
+          <text class="dg-label" x="115" y="93" text-anchor="middle">rss feeds + public apis</text>
+
+          <text x="335" y="74" text-anchor="middle" font-size="17">fetch + normalise</text>
+          <text class="dg-label" x="335" y="93" text-anchor="middle">one shape for every source</text>
+
+          <text x="555" y="74" text-anchor="middle" font-size="17">topic tagging</text>
+          <text class="dg-label" x="555" y="93" text-anchor="middle">story &rarr; topic mapping</text>
+
+          <path class="dg-arrow" d="M200,79 Q223,76.5 246,79" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M420,79 Q443,76.5 466,79" marker-end="url(#ah)"/>
+
+          <!-- down into storage -->
+          <path class="dg-arrow" d="M555,112 Q557.5,154 555,196" marker-end="url(#ah)"/>
+          <text class="dg-label" x="566" y="158">upsert, keyed on url</text>
+
+          <!-- storage -->
+          <g filter="url(#sk)">
+            <rect class="dg-box dg-box--accent" x="470" y="200" width="170" height="66" rx="5"/>
+          </g>
+          <text x="555" y="228" text-anchor="middle" font-size="17">supabase</text>
+          <text class="dg-label" x="555" y="247" text-anchor="middle">postgres + auth</text>
+
+          <!-- serve row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="250" y="200" width="170" height="66" rx="5"/>
+            <rect class="dg-box" x="30"  y="200" width="170" height="66" rx="5"/>
+          </g>
+          <text x="335" y="228" text-anchor="middle" font-size="17">express api</text>
+          <text class="dg-label" x="335" y="247" text-anchor="middle">/feed, /topics, /me</text>
+
+          <text x="115" y="228" text-anchor="middle" font-size="17">mobile client</text>
+          <text class="dg-label" x="115" y="247" text-anchor="middle">topic picker + feed</text>
+
+          <path class="dg-arrow" d="M466,233 Q445,230.5 424,233" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M246,233 Q225,230.5 204,233" marker-end="url(#ah)"/>
+          <path class="dg-arrow dg-arrow--dash" d="M115,196 L115,136 L335,136 L335,116" marker-end="url(#ah)" filter="url(#sk)"/>
+          <text class="dg-label" x="124" y="168">topic prefs</text>
+
+          <!-- deploy boundary -->
+          <rect class="dg-group" x="14" y="182" width="422" height="102" rx="8" filter="url(#sk)"/>
+          <text class="dg-label" x="24" y="300">deployed together on vercel</text>
+        </svg>
+
+        <p class="napkin__caption">
+          Ingest runs independently of serving. The client never talks to a news
+          source directly — it only ever reads rows that have already been
+          normalised and tagged.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= build log ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I built</h2>
+      <ul class="p-list">
+        <li>
+          <span>Ingest layer that pulls from multiple publishers and flattens every response into one internal story shape, so adding a source is a config change rather than a code change</span>
+          <span class="p-metric">source adapters</span>
+        </li>
+        <li>
+          <span>Postgres schema in Supabase with stories, topics, and a join table — the many-to-many is explicit, so one story can legitimately belong to two topics without duplicating the row</span>
+          <span class="p-metric">3 core tables</span>
+        </li>
+        <li>
+          <span>Express API exposing a small, boring surface: fetch the feed for a user's topics, list available topics, read and update preferences</span>
+          <span class="p-metric">REST</span>
+        </li>
+        <li>
+          <span>URL-keyed upserts so re-running ingest is idempotent — the same story syndicated across three outlets doesn't become three feed items</span>
+          <span class="p-metric">idempotent</span>
+        </li>
+        <li>
+          <span>Mobile-first client built and tested against iOS Safari first, then widened out, rather than shrinking a desktop layout down</span>
+          <span class="p-metric">iOS first</span>
+        </li>
+        <li>
+          <span>Continuous deploys from <code class="p-inline-code">main</code> to Vercel with Supabase credentials held as environment secrets, never in the bundle</span>
+          <span class="p-metric">live</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= engineering decisions ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">decisions worth defending</h2>
+      <div class="p-decisions">
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">01</div>
+          <h4>Normalise on the way in, not on the way out</h4>
+          <p>
+            Each publisher returns a different shape. I convert to a single
+            internal story record at ingest time, so the API and client only
+            ever handle one format and per-source weirdness is quarantined in
+            one adapter.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> a schema change means backfilling stored rows.
+            Worth it — the alternative is source-specific branching leaking into
+            every read path.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">02</div>
+          <h4>Managed Postgres over a hand-rolled backend</h4>
+          <p>
+            Supabase gave me real Postgres — joins, constraints, indexes — plus
+            auth I didn't have to write. For a solo project the thing that kills
+            momentum is rebuilding session handling, not writing queries.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> platform coupling. Mitigated by keeping business
+            logic in Express and treating Supabase as a database, not a
+            framework.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">03</div>
+          <h4>Idempotent ingest, keyed on canonical URL</h4>
+          <p>
+            Ingest is an upsert, not an insert. Re-running it is safe, a failed
+            run can simply be retried, and syndicated duplicates collapse into a
+            single row before they ever reach a feed.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> URL is an imperfect identity — tracking params and
+            AMP variants slip through. Canonicalising before hashing catches
+            most of it.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 260" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="250" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">04</div>
+          <h4>Explicit topics instead of a recommender</h4>
+          <p>
+            A model that infers interest would be more impressive to build and
+            worse to use — cold start, feedback loops, no way to tell it it's
+            wrong. Declared topics are inspectable and instantly correctable.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> no serendipity. A "related topics" surface is the
+            honest way to add discovery without giving up user control.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= screens ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">screens</h2>
+      <div class="p-shots">
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            the feed
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>The topic-filtered feed on mobile — finite by design.</figcaption>
+        </figure>
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            topic picker
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>Topic selection — the first thing you see, not a buried setting.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= next ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I'd build next</h2>
+      <div class="p-body">
+        <p>
+          <strong>Scheduled ingest.</strong> Move the fetch loop onto a cron
+          trigger with per-source failure isolation, so one publisher going down
+          doesn't stall the run.
+        </p>
+        <p>
+          <strong>Read state.</strong> Persisting what you've already seen is
+          what turns a filtered feed into a genuinely finite one.
+        </p>
+        <p>
+          <strong>Stricter deduplication.</strong> Title-similarity matching on
+          top of URL canonicalisation, to catch the same wire story republished
+          under four different headlines.
+        </p>
+      </div>
+    </section>
+
+    <nav class="p-next">
+      <div class="p-next__side">
+        <span>back to</span>
+        <a href="projects.html">all projects</a>
+      </div>
+      <div class="p-next__side p-next__side--right">
+        <span>next project</span>
+        <a href="hunter.html">hunter &rarr;</a>
+      </div>
+    </nav>
+
+  </main>
+</body>
+</html>

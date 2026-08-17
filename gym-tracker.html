@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gym tracker — ethan moon.</title>
+  <meta name="description" content="An append-only lifting log with derived personal records and instant offline charts. Built inside hunter with JavaScript, Chart.js, and SQLite.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body style="--note:#a5e6d8">
+
+  <svg class="sk-defs" aria-hidden="true">
+    <filter id="sk" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+    </filter>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" class="dg-head"/>
+    </marker>
+  </svg>
+
+  <aside class="sidebar">
+    <div class="sidebar__brand"><a href="index.html" style="color:inherit;text-decoration:none">ethan moon.</a></div>
+    <nav class="sidebar__nav">
+      <a href="index.html#about" class="sidebar__nav-link">about</a>
+      <a href="index.html#works" class="sidebar__nav-link">works</a>
+      <a href="index.html#contact" class="sidebar__nav-link">contact</a>
+    </nav>
+
+    <div class="sidebar__label">projects</div>
+    <nav class="sidebar__projects">
+      <a href="dispatch.html"     class="sidebar__project" style="--dot:#ffe083">dispatch</a>
+      <a href="hunter.html"       class="sidebar__project" style="--dot:#a8d8ff">hunter</a>
+      <a href="ur5-moveit.html"   class="sidebar__project" style="--dot:#ffb3a7">ur5 motion stack</a>
+      <a href="gemx-rby1.html"    class="sidebar__project" style="--dot:#d5c1f2">gem-x rby1</a>
+      <a href="gym-tracker.html"  class="sidebar__project sidebar__project--current" style="--dot:#a5e6d8" aria-current="page">gym tracker</a>
+    </nav>
+  </aside>
+
+  <main class="content content--project">
+
+    <a href="projects.html" class="back-link">&larr; all projects</a>
+
+    <!-- ================= hero ================= -->
+    <header class="p-hero">
+      <div class="p-eyebrow"><i class="swatch"></i> data modelling &middot; frontend</div>
+      <h1 class="p-title"><span>gym tracker</span></h1>
+      <p class="p-pitch">
+        A lifting log built on one rule: <em>the past is immutable.</em> Every set
+        you log is appended, never edited, so a personal record from March is
+        still there in September. Every statistic — estimated one-rep max, best
+        volume, longest streak — is derived from that history on read rather than
+        stored and mutated. Ships inside hunter.
+      </p>
+
+      <div class="p-links">
+        <a class="p-btn" href="hunter.html">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#a5e6d8" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>part of hunter</span>
+        </a>
+        <a class="p-btn" href="https://github.com/ethanhmoon/Health-Tracker">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>read the code</span>
+        </a>
+      </div>
+
+      <dl class="p-spec">
+        <div><dt>my role</dt><dd>Sole engineer — schema, stats, and charts</dd></div>
+        <div><dt>stack</dt><dd>JavaScript, Chart.js, SQLite</dd></div>
+        <div><dt>data model</dt><dd>Append-only sets, 6 fixed categories</dd></div>
+        <div><dt>network</dt><dd>None — fully offline</dd></div>
+      </dl>
+    </header>
+
+    <!-- ================= problem ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">the problem</h2>
+      <div class="p-body">
+        <p>
+          Most workout apps store your current numbers and quietly overwrite them.
+          Edit a set, correct a typo, resync a device, and last spring's best lift
+          is gone — along with any ability to answer "am I actually stronger than I
+          was in March?" The data model treats progress as a value, when it's
+          really a history.
+        </p>
+        <p>
+          So I built it the other way round. <strong>Logged sets are facts about a
+          date and are never modified.</strong> Personal records aren't fields you
+          update; they're the answer to a query over immutable rows. That single
+          choice makes the whole feature set fall out for free — streaks, trend
+          charts, and four kinds of PR are all just different aggregations.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= architecture ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">how it works</h2>
+      <div class="napkin">
+        <div class="napkin__grid" aria-hidden="true"></div>
+        <svg class="sk-frame" viewBox="0 0 800 530" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="790" height="520" rx="8" fill="#fff" stroke="#1a1a1a" stroke-width="2.4" filter="url(#sk)"/>
+        </svg>
+
+        <svg class="diagram" viewBox="0 0 800 432" role="img"
+             aria-label="Gym tracker data flow: logging a set appends a row to an immutable sets table in SQLite. A derived stats layer reads that history to compute estimated one-rep max via the Epley formula, weight and volume trends, and four kinds of personal record, which render as charts and badges with no network calls.">
+
+          <!-- input + store -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="40"  y="46" width="180" height="64" rx="5"/>
+            <rect class="dg-box dg-box--accent" x="300" y="46" width="200" height="64" rx="5"/>
+          </g>
+          <text x="130" y="73" text-anchor="middle" font-size="17">log a set</text>
+          <text class="dg-label" x="130" y="92" text-anchor="middle">exercise, weight, reps</text>
+
+          <text x="400" y="68" text-anchor="middle" font-size="17">sets table</text>
+          <text class="dg-label" x="400" y="86" text-anchor="middle">sqlite &middot; append only</text>
+          <text class="dg-label" x="400" y="100" text-anchor="middle">no update, no delete</text>
+
+          <path class="dg-arrow" d="M220,78 Q258,75.5 296,78" marker-end="url(#ah)"/>
+
+          <text class="dg-label" x="536" y="70">six fixed muscle-group</text>
+          <text class="dg-label" x="536" y="84">categories &mdash; so rows</text>
+          <text class="dg-label" x="536" y="98">stay aggregatable</text>
+          <path class="dg-arrow dg-arrow--dash" d="M528,80 Q516,77.5 504,80" marker-end="url(#ah)"/>
+
+          <!-- derive -->
+          <path class="dg-arrow" d="M400,110 Q402.5,141 400,172" marker-end="url(#ah)"/>
+          <text class="dg-label" x="412" y="148">read the whole history</text>
+
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="290" y="176" width="220" height="72" rx="5"/>
+          </g>
+          <text x="400" y="204" text-anchor="middle" font-size="17">derived stats</text>
+          <text class="dg-label" x="400" y="222" text-anchor="middle">computed on read,</text>
+          <text class="dg-label" x="400" y="236" text-anchor="middle">never stored</text>
+
+          <!-- outputs -->
+          <path class="dg-arrow" d="M330,248 C330,286 200,284 150,316" marker-end="url(#ah)" filter="url(#sk)"/>
+          <path class="dg-arrow" d="M400,248 Q402.5,282 400,316" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M470,248 C470,286 600,284 650,316" marker-end="url(#ah)" filter="url(#sk)"/>
+
+          <g filter="url(#sk)">
+            <rect class="dg-box dg-box--soft" x="40"  y="320" width="180" height="70" rx="5"/>
+            <rect class="dg-box dg-box--soft" x="310" y="320" width="180" height="70" rx="5"/>
+            <rect class="dg-box dg-box--soft" x="560" y="320" width="190" height="70" rx="5"/>
+          </g>
+          <text x="130" y="348" text-anchor="middle" font-size="17">est. 1rm</text>
+          <text class="dg-label" x="130" y="366" text-anchor="middle">epley formula</text>
+
+          <text x="400" y="348" text-anchor="middle" font-size="17">trend charts</text>
+          <text class="dg-label" x="400" y="366" text-anchor="middle">weight + volume, chart.js</text>
+
+          <text x="655" y="344" text-anchor="middle" font-size="17">4 pr types</text>
+          <text class="dg-label" x="655" y="361" text-anchor="middle">max weight, best volume,</text>
+          <text class="dg-label" x="655" y="375" text-anchor="middle">best set, longest streak</text>
+
+          <text class="dg-label" x="40" y="420">zero network calls &mdash; every view renders from local rows, instantly</text>
+        </svg>
+
+        <p class="napkin__caption">
+          Nothing below the sets table is a source of truth. Delete every derived
+          number and it rebuilds identically from the log.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= build log ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I built</h2>
+      <ul class="p-list">
+        <li>
+          <span>Append-only workout history — logging is an insert, so nothing ever overwrites a past personal record</span>
+          <span class="p-metric">immutable log</span>
+        </li>
+        <li>
+          <span>Six fixed muscle-group categories rather than free-text labels, which keeps every row aggregatable and prevents the taxonomy drifting into "chest", "Chest", and "chest day"</span>
+          <span class="p-metric">6 categories</span>
+        </li>
+        <li>
+          <span>Estimated one-rep max via the Epley formula, so a heavy triple and a lighter set of ten become comparable numbers on the same axis</span>
+          <span class="p-metric">epley 1RM</span>
+        </li>
+        <li>
+          <span>Four independent record types tracked automatically — heaviest weight, best single-session volume, best individual set, and longest active streak</span>
+          <span class="p-metric">4 PR types</span>
+        </li>
+        <li>
+          <span>Weight and volume charts that update the instant a set is logged, rendered client-side from local rows with no request in the loop</span>
+          <span class="p-metric">chart.js</span>
+        </li>
+        <li>
+          <span>Shares hunter's SQLite file and FastAPI host, so it's one process and one backup rather than a second app to maintain</span>
+          <span class="p-metric">no extra infra</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= decisions ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">decisions worth defending</h2>
+      <div class="p-decisions">
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">01</div>
+          <h4>Append-only, and derive everything else</h4>
+          <p>
+            The sets table is the only source of truth. PRs, streaks, and trends
+            are queries, not stored state — so they can never disagree with the
+            history that produced them, and a bug in the stats layer is a bug in
+            a function, not corruption in a table.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> correcting a mistyped set means logging a
+            compensating entry, and reads get more expensive as history grows.
+            Both are cheap at personal-log scale.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">02</div>
+          <h4>A closed category set, not free text</h4>
+          <p>
+            Free-text labels feel flexible and destroy your ability to group
+            anything six months later. Six fixed categories mean every historical
+            row remains comparable to every new one without a cleanup migration.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> exercises that don't fit get filed approximately.
+            Consistent aggregation beats precise-but-unusable taxonomy.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">03</div>
+          <h4>A published formula over a bespoke model</h4>
+          <p>
+            Epley is one line, well documented, and independently checkable —
+            anyone can verify the number the app shows them. Fitting my own
+            estimator on my own limited data would have been less accurate and
+            impossible to audit.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> Epley drifts at very high rep counts. Known,
+            bounded, and documented in the UI rather than hidden.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">04</div>
+          <h4>Offline is a feature, not a fallback</h4>
+          <p>
+            Gyms have bad signal, and a tracker that spins while you're resting
+            between sets doesn't get used. Every read and write hits local
+            storage, so charts redraw immediately and there's no loading state to
+            design around.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> no cross-device sync. Consistent with hunter's
+            local-first posture — one file, yours, backed up how you like.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= screens ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">screens</h2>
+      <div class="p-shots">
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            history + PRs
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>Logged sets with the four record types surfaced alongside.</figcaption>
+        </figure>
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            trend charts
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>Weight and volume over time, rendered from local rows.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= next ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I'd build next</h2>
+      <div class="p-body">
+        <p>
+          <strong>Materialised stats with invalidation.</strong> Deriving on read
+          is correct but linear in history length. A cached aggregate keyed on the
+          latest row id would keep correctness and flatten the cost.
+        </p>
+        <p>
+          <strong>Per-exercise 1RM curves.</strong> The data already supports it —
+          it's a grouping change, not a schema change, which is the payoff of
+          modelling this as an event log.
+        </p>
+        <p>
+          <strong>Export.</strong> An append-only log is the easiest thing in the
+          world to hand back to its owner as CSV. If the pitch is that the data is
+          yours, leaving should be trivial.
+        </p>
+      </div>
+    </section>
+
+    <nav class="p-next">
+      <div class="p-next__side">
+        <span>previous</span>
+        <a href="gemx-rby1.html">&larr; gem-x rby1</a>
+      </div>
+      <div class="p-next__side p-next__side--right">
+        <span>back to</span>
+        <a href="projects.html">all projects</a>
+      </div>
+    </nav>
+
+  </main>
+</body>
+</html>

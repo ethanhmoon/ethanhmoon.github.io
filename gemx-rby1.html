@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>gem-x rby1 — ethan moon.</title>
+  <meta name="description" content="Extending NVIDIA's GEM-X monocular whole-body 3D pose model toward additional humanoid platforms, by isolating the retargeting layer from the pose estimator.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="project.css">
+</head>
+<body style="--note:#d5c1f2">
+
+  <svg class="sk-defs" aria-hidden="true">
+    <filter id="sk" x="-6%" y="-6%" width="112%" height="112%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.028" numOctaves="2" seed="9" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="4"/>
+    </filter>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9 z" class="dg-head"/>
+    </marker>
+  </svg>
+
+  <aside class="sidebar">
+    <div class="sidebar__brand"><a href="index.html" style="color:inherit;text-decoration:none">ethan moon.</a></div>
+    <nav class="sidebar__nav">
+      <a href="index.html#about" class="sidebar__nav-link">about</a>
+      <a href="index.html#works" class="sidebar__nav-link">works</a>
+      <a href="index.html#contact" class="sidebar__nav-link">contact</a>
+    </nav>
+
+    <div class="sidebar__label">projects</div>
+    <nav class="sidebar__projects">
+      <a href="dispatch.html"     class="sidebar__project" style="--dot:#ffe083">dispatch</a>
+      <a href="hunter.html"       class="sidebar__project" style="--dot:#a8d8ff">hunter</a>
+      <a href="ur5-moveit.html"   class="sidebar__project" style="--dot:#ffb3a7">ur5 motion stack</a>
+      <a href="gemx-rby1.html"    class="sidebar__project sidebar__project--current" style="--dot:#d5c1f2" aria-current="page">gem-x rby1</a>
+      <a href="gym-tracker.html"  class="sidebar__project" style="--dot:#a5e6d8">gym tracker</a>
+    </nav>
+  </aside>
+
+  <main class="content content--project">
+
+    <a href="projects.html" class="back-link">&larr; all projects</a>
+
+    <!-- ================= hero ================= -->
+    <header class="p-hero">
+      <div class="p-eyebrow"><i class="swatch"></i> computer vision &middot; robotics research</div>
+      <h1 class="p-title"><span>gem-x rby1</span></h1>
+      <p class="p-pitch">
+        A fork of NVIDIA's GEM-X, which recovers whole-body 3D human pose from a
+        single camera and retargets it onto a humanoid robot. The upstream
+        pipeline targets a Unitree G1; I'm working on the layer that lets it
+        drive other platforms — which means separating "what the human did" from
+        "what this particular robot can do about it."
+      </p>
+
+      <div class="p-links">
+        <a class="p-btn" href="https://github.com/ethanhmoon/GEM-X">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#d5c1f2" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>read the fork</span>
+        </a>
+        <a class="p-btn" href="https://github.com/NVlabs/GEM-X">
+          <svg class="sk-fill" viewBox="0 0 150 44" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="4" y="4" width="142" height="36" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <span>upstream (NVlabs)</span>
+        </a>
+      </div>
+
+      <dl class="p-spec">
+        <div><dt>my role</dt><dd>Extending the retargeting layer of an upstream research model</dd></div>
+        <div><dt>stack</dt><dd>Python, PyTorch, monocular computer vision</dd></div>
+        <div><dt>pose representation</dt><dd>SOMA body model — 77 joints, whole body</dd></div>
+        <div><dt>status</dt><dd>Active research, in progress</dd></div>
+      </dl>
+    </header>
+
+    <!-- ================= problem ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">the problem</h2>
+      <div class="p-body">
+        <p>
+          Teaching a humanoid a new motion is expensive. Mocap suits, marker
+          setups, and hand-authored trajectories all scale badly. Monocular pose
+          estimation offers a much cheaper path: point a single ordinary camera at
+          a person, recover their full-body pose, and hand that motion to a robot.
+        </p>
+        <p>
+          The catch is the handoff. A 77-joint human body model and a humanoid
+          robot do not share a skeleton, joint limits, mass distribution, or
+          degrees of freedom. <strong>Retargeting is a constrained mapping
+          problem, not a copy.</strong> Upstream solves it for one specific
+          platform; the assumptions of that platform are baked into the mapping.
+          My work is on pulling those assumptions out into something swappable.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= architecture ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">how it works</h2>
+      <div class="napkin">
+        <div class="napkin__grid" aria-hidden="true"></div>
+        <svg class="sk-frame" viewBox="0 0 800 490" preserveAspectRatio="none" aria-hidden="true">
+          <rect x="5" y="5" width="790" height="480" rx="8" fill="#fff" stroke="#1a1a1a" stroke-width="2.4" filter="url(#sk)"/>
+        </svg>
+
+        <svg class="diagram" viewBox="0 0 800 398" role="img"
+             aria-label="GEM-X pipeline: monocular video feeds a pose estimation network that outputs a 77-joint SOMA whole-body pose. A retargeter maps that pose onto robot joint targets. Upstream targets a Unitree G1; the extension work adds additional platforms such as the RB-Y1.">
+
+          <!-- perception row -->
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="40"  y="40" width="160" height="64" rx="5"/>
+            <rect class="dg-box" x="250" y="40" width="170" height="64" rx="5"/>
+            <rect class="dg-box" x="470" y="40" width="180" height="64" rx="5"/>
+          </g>
+          <text x="120" y="67" text-anchor="middle" font-size="17">monocular video</text>
+          <text class="dg-label" x="120" y="86" text-anchor="middle">one ordinary camera</text>
+
+          <text x="335" y="67" text-anchor="middle" font-size="17">gem-x network</text>
+          <text class="dg-label" x="335" y="86" text-anchor="middle">pytorch, pretrained</text>
+
+          <text x="560" y="62" text-anchor="middle" font-size="17">soma pose</text>
+          <text class="dg-label" x="560" y="79" text-anchor="middle">77-joint whole body</text>
+          <text class="dg-label" x="560" y="93" text-anchor="middle">per frame</text>
+
+          <path class="dg-arrow" d="M200,72 Q223,69.5 246,72" marker-end="url(#ah)"/>
+          <path class="dg-arrow" d="M420,72 Q443,69.5 466,72" marker-end="url(#ah)"/>
+
+          <!-- retargeter -->
+          <path class="dg-arrow" d="M560,104 L560,136 L400,136 L400,164" marker-end="url(#ah)" filter="url(#sk)"/>
+
+          <g filter="url(#sk)">
+            <rect class="dg-box dg-box--accent" x="300" y="168" width="200" height="70" rx="5"/>
+          </g>
+          <text x="400" y="196" text-anchor="middle" font-size="17">retargeter</text>
+          <text class="dg-label" x="400" y="213" text-anchor="middle">joint mapping, limits,</text>
+          <text class="dg-label" x="400" y="227" text-anchor="middle">scale + feasibility</text>
+
+          <!-- branch to platforms -->
+          <path class="dg-arrow" d="M360,238 C360,272 250,270 212,290" marker-end="url(#ah)" filter="url(#sk)"/>
+          <path class="dg-arrow dg-arrow--dash" d="M440,238 C440,272 550,270 588,290" marker-end="url(#ah)" filter="url(#sk)"/>
+
+          <g filter="url(#sk)">
+            <rect class="dg-box" x="110" y="294" width="180" height="64" rx="5"/>
+            <rect class="dg-box dg-box--accent" x="500" y="294" width="180" height="64" rx="5"/>
+          </g>
+          <text x="200" y="321" text-anchor="middle" font-size="17">unitree g1</text>
+          <text class="dg-label" x="200" y="340" text-anchor="middle">upstream target</text>
+
+          <text x="590" y="321" text-anchor="middle" font-size="17">rb-y1 &amp; others</text>
+          <text class="dg-label" x="590" y="340" text-anchor="middle">what I'm adding</text>
+
+          <rect class="dg-group" x="486" y="280" width="208" height="92" rx="8" filter="url(#sk)"/>
+
+          <text class="dg-label" x="40" y="386">the pose estimator stays untouched &mdash; all platform knowledge lives in the retargeter</text>
+        </svg>
+
+        <p class="napkin__caption">
+          One boundary carries the whole design: everything left of the
+          retargeter is about the human, everything right of it is about a
+          specific robot.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================= build log ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what I've done</h2>
+      <ul class="p-list">
+        <li>
+          <span>Forked NVIDIA's GEM-X monocular 3D human pose model and brought the full inference pipeline up locally — environment, weights, and dependencies</span>
+          <span class="p-metric">77-joint</span>
+        </li>
+        <li>
+          <span>Traced the base pipeline end to end, from video frames through SOMA pose recovery to the retargeting step that produces Unitree G1 joint targets</span>
+          <span class="p-metric">soma retargeter</span>
+        </li>
+        <li>
+          <span>Identified the retargeter as the platform-coupled seam, and separated what the model estimates about the human from what a given robot can physically reproduce</span>
+          <span class="p-metric">interface boundary</span>
+        </li>
+        <li>
+          <span>Working on retargeting to additional humanoid platforms with different joint topologies and kinematic limits</span>
+          <span class="p-metric">in progress</span>
+        </li>
+        <li>
+          <span>Keeping changes narrow and localised so upstream research updates remain mergeable rather than forking into a dead end</span>
+          <span class="p-metric">mergeable fork</span>
+        </li>
+      </ul>
+    </section>
+
+    <!-- ================= decisions ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">decisions worth defending</h2>
+      <div class="p-decisions">
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">01</div>
+          <h4>Extend a strong model, don't retrain one</h4>
+          <p>
+            Reproducing a state-of-the-art pose estimator would have consumed the
+            entire project and produced a worse model. The scarce thing here is
+            the retargeting layer, so that's where the effort goes. Reading
+            someone else's research code well is its own skill.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> I inherit upstream's failure modes and can't fix
+            pose errors at the source. Acceptable — those are documented,
+            measurable, and not my research question.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">02</div>
+          <h4>Keep the seam at the retargeter</h4>
+          <p>
+            Every platform-specific assumption — joint count, limits, link
+            lengths, what's even actuated — lives on one side of a single
+            interface. Adding a robot should mean writing a new mapping, not
+            editing the perception stack.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> a clean boundary can't exploit platform-specific
+            shortcuts in the estimator. Worth it for a pipeline meant to serve
+            more than one robot.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">03</div>
+          <h4>Monocular input as a deliberate constraint</h4>
+          <p>
+            A single RGB camera is strictly harder than mocap or depth — scale
+            and depth are ambiguous from one view. It's also the only setup that
+            works with a phone and a room, which is what makes the approach
+            useful outside a lab.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> less accurate absolute positioning than
+            multi-camera capture. The retargeter has to be robust to that,
+            not assume it away.
+          </p>
+        </article>
+
+        <article class="dcard">
+          <svg class="sk-frame" viewBox="0 0 300 290" preserveAspectRatio="none" aria-hidden="true">
+            <rect x="5" y="5" width="290" height="280" rx="6" fill="#fff" stroke="#1a1a1a" stroke-width="2.2" filter="url(#sk)"/>
+          </svg>
+          <div class="dcard__num">04</div>
+          <h4>Stay mergeable with upstream</h4>
+          <p>
+            Forks of active research repos rot fast. I keep additions in new
+            modules rather than rewriting existing ones, so pulling in upstream
+            improvements stays a routine merge instead of an archaeology
+            project.
+          </p>
+          <p class="dcard__tradeoff">
+            <b>trade-off:</b> some duplication and indirection I'd refactor away
+            in a codebase I fully owned.
+          </p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- ================= screens ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">what it looks like</h2>
+      <div class="p-shots">
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            pose overlay
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>Recovered 77-joint pose overlaid on the source frame.</figcaption>
+        </figure>
+        <figure class="shot">
+          <i class="shot__tape shot__tape--l"></i><i class="shot__tape shot__tape--r"></i>
+          <div class="shot__placeholder">
+            retargeted motion
+            <small>screenshot coming soon</small>
+          </div>
+          <figcaption>The same motion after retargeting onto a humanoid.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ================= next ================= -->
+    <section class="p-section">
+      <h2 class="p-h2">where this goes</h2>
+      <div class="p-body">
+        <p>
+          <strong>A retargeting quality metric.</strong> Right now "does this look
+          right" is a human judgement. End-effector trajectory error against the
+          source pose would make platform comparisons quantitative.
+        </p>
+        <p>
+          <strong>Feasibility filtering.</strong> Some human motions simply aren't
+          reachable for a given robot. The retargeter should say so explicitly
+          rather than emitting a clipped approximation.
+        </p>
+        <p>
+          <strong>Closing the loop with simulation.</strong> Retargeted motion
+          that's kinematically valid can still be dynamically unstable. Running
+          output through a physics sim before hardware is the obvious next gate.
+        </p>
+      </div>
+    </section>
+
+    <nav class="p-next">
+      <div class="p-next__side">
+        <span>previous</span>
+        <a href="ur5-moveit.html">&larr; ur5 motion stack</a>
+      </div>
+      <div class="p-next__side p-next__side--right">
+        <span>next project</span>
+        <a href="gym-tracker.html">gym tracker &rarr;</a>
+      </div>
+    </nav>
+
+  </main>
+</body>
+</html>
