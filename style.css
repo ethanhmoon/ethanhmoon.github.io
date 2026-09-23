@@ -782,7 +782,10 @@ body {
     flex-direction: column;
   }
 
+  /* stacked above the content, so it should scroll away instead of
+     sticking to the top and sitting on top of the page */
   .sidebar {
+    position: static;
     width: auto;
     padding: 2rem 2rem 0.5rem;
   }
