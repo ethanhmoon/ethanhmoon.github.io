@@ -114,6 +114,14 @@ window.addEventListener("pointerup", function () {
   }
 });
 
+// the browser took the touch over for scrolling — settle the card back
+window.addEventListener("pointercancel", function () {
+  if (!drag) return;
+  drag.card.classList.remove("dragging");
+  drag = null;
+  restack();
+});
+
 // --- keyboard ---
 stack.addEventListener("keydown", function (e) {
   if (busy || cards.length < 2) return;

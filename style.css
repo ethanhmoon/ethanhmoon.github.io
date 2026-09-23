@@ -6,6 +6,8 @@
 }
 
 html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
   scroll-behavior: smooth;
   background: var(--color-bg);
   overflow-x: hidden;
@@ -30,6 +32,7 @@ body {
   margin: 0 auto;
   display: flex;
   min-height: 100vh;
+  min-height: 100dvh;
   max-width: 1400px;
   background: var(--color-bg);
   color: var(--color-text);
@@ -353,7 +356,7 @@ body {
   border-bottom: 2px solid var(--color-accent);
   transition: opacity .15s ease;
 }
-.dt-more:hover { opacity: .7; }
+@media (hover: hover) { .dt-more:hover { opacity: .7; } }
 .dt-text { flex: 1; }
 .dt-metric {
   flex-shrink: 0;
@@ -420,7 +423,7 @@ body {
     cursor: pointer; position: relative; z-index: 1;
     transform: translateX(14px);                 /* others stick out on the sheet edge */
     transition: transform .2s ease, box-shadow .2s ease; }
-.sticky:hover  { transform: translateX(18px); }  /* unselected slide further out on hover */
+@media (hover: hover) { .sticky:hover  { transform: translateX(18px); } }  /* unselected slide further out on hover */
 .sticky.active,
 .sticky.active:hover {
     transform: translateX(0);                    /* pulled in so it rests ON the page a little */
@@ -459,7 +462,7 @@ body {
 .section-tag { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 26px;
     text-align: center; margin: 0 0 14px; opacity: .85; }
 
-/* link to the full project write-ups hub, under the "projects" tag */
+/* link to the full project write-ups hub, under the sticky-note grid */
 .projects-more {
   display: block;
   text-align: center;
@@ -469,11 +472,11 @@ body {
   text-decoration: none;
   border-bottom: 2px solid var(--color-accent);
   width: max-content;
-  margin: 0 auto 18px;
+  margin: 14px auto 0;
   padding-bottom: 1px;
   transition: opacity .15s ease;
 }
-.projects-more:hover { opacity: .7; }
+@media (hover: hover) { .projects-more:hover { opacity: .7; } }
 
 /* ---------- projects as sticky notes ---------- */
 .projects { flex-shrink: 0; max-width: 412px; }
@@ -486,8 +489,11 @@ body {
     transition: transform .16s ease; }
 .pnote:nth-child(2n)   { transform: rotate(-2.5deg); }
 .pnote:nth-child(3n)   { transform: rotate(2deg); }
-.pnote:hover           { transform: translateY(-5px) rotate(0deg); }
+@media (hover: hover) { .pnote:hover           { transform: translateY(-5px) rotate(0deg); } }
 .pnote .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
+.pnote__icon { position: relative; z-index: 1; width: 48px; height: 48px; margin-bottom: 8px;
+    border-radius: 8px; border: 1.5px solid rgba(26,26,26,.55);
+    box-shadow: 1px 2px 4px rgba(0,0,0,.12); object-fit: cover; }
 .pnote .pname { position: relative; z-index: 1; font-family: 'Patrick Hand', cursive;
     font-weight: 700; font-size: 24px; line-height: 1.05; }
 .pnote .pblurb { position: relative; z-index: 1; font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
@@ -495,11 +501,11 @@ body {
 
 /* ---------- internship experience: side column next to the notebook ---------- */
 .internships { flex-shrink: 0; width: min(280px, 100%); }
-.intern-row { display: flex; flex-direction: column; gap: 18px; }
+.intern-row { display: flex; flex-direction: column; gap: 12px; }
 .icard { position: relative; text-align: left;
     background: transparent; border: none; cursor: pointer; color: var(--ink);
     padding: 18px 20px; transition: transform .16s ease; }
-.icard:hover { transform: translateY(-4px); }
+@media (hover: hover) { .icard:hover { transform: translateY(-4px); } }
 .icard .sk-frame { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
 .icard > * { position: relative; z-index: 1; }
 .icard h4 { margin: 0; font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 24px; line-height: 1.05; }
@@ -529,7 +535,7 @@ body {
   border-bottom: 2px solid var(--c, #ffe083);
   transition: opacity .15s ease;
 }
-.pcard__more:hover { opacity: .7; }
+@media (hover: hover) { .pcard__more:hover { opacity: .7; } }
 
 @media (max-width: 640px) {
   .projects-detail__grid {
@@ -605,8 +611,10 @@ body {
   transition: transform 0.15s ease;
 }
 
-.sticky-note a:hover .sticky-note__link {
-  transform: translateY(-3px);
+@media (hover: hover) {
+  .sticky-note a:hover .sticky-note__link {
+    transform: translateY(-3px);
+  }
 }
 
 /* ============================================================
@@ -643,7 +651,7 @@ body {
     cursor: pointer; padding: 6px 30px 10px; color: var(--ink);
     font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 26px;
     transition: transform .15s ease; }
-.contact-card .send:hover { transform: translateY(-2px) rotate(-1deg); }
+@media (hover: hover) { .contact-card .send:hover { transform: translateY(-2px) rotate(-1deg); } }
 .contact-card .send .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
 .contact-card .send span { position: relative; z-index: 1; }
 
@@ -657,7 +665,7 @@ body {
     box-shadow: 3px 4px 9px rgba(0,0,0,.15); transition: transform .16s ease; }
 .snote:nth-child(2) { transform: rotate(-1.5deg); }
 .snote:nth-child(3) { transform: rotate(1.5deg); }
-.snote:hover { transform: translateX(4px) rotate(0deg); }
+@media (hover: hover) { .snote:hover { transform: translateX(4px) rotate(0deg); } }
 .snote .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
 .snote .ico, .snote .lbl { position: relative; z-index: 1; }
 .snote .lbl { font-family: 'Patrick Hand', cursive; font-weight: 700; font-size: 22px; }
@@ -667,6 +675,9 @@ body {
   .socials { width: 100%; }
   .snote-row { flex-direction: row; flex-wrap: wrap; }
   .snote { flex: 1 1 140px; }
+  /* iOS Safari zooms the page when a focused field is under 16px */
+  .contact-card .row input,
+  .contact-card textarea { font-size: 16px; }
 }
 
 .stack-wrap {
@@ -818,4 +829,10 @@ body {
   .stack-wrap {
     transform: none;
   }
+}
+
+/* on touchscreens let a vertical swipe over the photo scroll the page;
+   sideways drags still flick the card */
+@media (hover: none) {
+  .polaroid { touch-action: pan-y; }
 }

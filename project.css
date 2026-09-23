@@ -67,7 +67,7 @@
   background: var(--dot, #d8d8d8);
 }
 
-.sidebar__project:hover { opacity: 1; }
+@media (hover: hover) { .sidebar__project:hover { opacity: 1; } }
 
 .sidebar__project--current {
   opacity: 1;
@@ -87,7 +87,7 @@
   transition: opacity .15s ease, transform .15s ease;
 }
 
-.back-link:hover { opacity: 1; transform: translateX(-3px); }
+@media (hover: hover) { .back-link:hover { opacity: 1; transform: translateX(-3px); } }
 
 /* ---------- hero ---------- */
 
@@ -161,7 +161,7 @@
 }
 .p-btn .sk-fill { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; overflow: visible; }
 .p-btn > span { position: relative; z-index: 1; }
-.p-btn:hover { transform: translateY(-2px); }
+@media (hover: hover) { .p-btn:hover { transform: translateY(-2px); } }
 
 /* spec strip: role / timeline / stack / status */
 .p-spec {
@@ -492,7 +492,7 @@
   border-bottom: 2px solid var(--note);
 }
 
-.p-next__side a:hover { background: var(--note); }
+@media (hover: hover) { .p-next__side a:hover { background: var(--note); } }
 
 .p-next__side--right { text-align: right; }
 
@@ -531,7 +531,7 @@
 }
 
 .hub-card > * { position: relative; z-index: 1; }
-.hub-card:hover { transform: translateY(-4px); }
+@media (hover: hover) { .hub-card:hover { transform: translateY(-4px); } }
 
 .hub-card__tag {
   display: inline-block;
